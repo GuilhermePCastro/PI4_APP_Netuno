@@ -9,4 +9,10 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="pagina_inicial">Página Inicial</string>
+    <string name="categorias_de_produtos">Categorias de Produtos</string>
+    <string name="leitor_de_qr_code">Leitor de QR Code</string>
+    <string name="meus_pedidos">Meus pedidos</string>
+    <string name="abrir_menu">Abrir menu</string>
+    <string name="fechar_menu">Fechar menu</string>
 </resources>

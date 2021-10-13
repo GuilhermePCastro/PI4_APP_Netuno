@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_orders"
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+        android:title="@string/meus_pedidos" />
+    <item
+        android:id="@+id/menu_home"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/pagina_inicial"
+        android:visible="true" />
+    <item
+        android:id="@+id/menu_categories"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_category_24"
+        android:title="@string/categorias_de_produtos"
+        android:visible="true" />
+    <item
+        android:id="@+id/menu_qrcode"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_qr_code_scanner_24"
+        android:title="@string/leitor_de_qr_code"
+        android:visible="true" />
+</menu>

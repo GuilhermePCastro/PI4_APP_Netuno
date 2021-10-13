@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="414" height="736" viewBox="0 0 414 736">
+  <defs>
+    <clipPath id="clip-iPhone_6_7_8_Plus_3">
+      <rect width="414" height="736"/>
+    </clipPath>
+  </defs>
+  <g id="iPhone_6_7_8_Plus_3" data-name="iPhone 6, 7, 8 Plus – 3" clip-path="url(#clip-iPhone_6_7_8_Plus_3)">
+    <rect width="414" height="736" fill="#fff"/>
+    <rect id="Retângulo_35" data-name="Retângulo 35" width="414" height="58" fill="#fff"/>
+    <path id="Retângulo_35_-_Contorno" data-name="Retângulo 35 - Contorno" d="M1,1V57H413V1H1M0,0H414V58H0Z" fill="#707070"/>
+    <rect id="Retângulo_36" data-name="Retângulo 36" width="140" height="39" transform="translate(137 10)" fill="#0d9ad8"/>
+    <rect id="Retângulo_28" data-name="Retângulo 28" width="414" height="60" transform="translate(0 58)" fill="#fff"/>
+    <path id="Retângulo_28_-_Contorno" data-name="Retângulo 28 - Contorno" d="M1,1V59H413V1H1M0,0H414V60H0Z" transform="translate(0 58)" fill="#d8d8d8"/>
+    <text id="Home_Bonecos_Fukos_Camiseta_Dupla_Face_Cobra_KAI_dOÔ" data-name="Home &gt; Bonecos Fukos &gt; Camiseta Dupla Face Cobra KAI dOÔ" transform="translate(23 103)" fill="rgba(0,0,0,0.5)" font-size="10" font-family="Raleway-Regular, Raleway"><tspan x="0" y="0">Home &gt; Bonecos Fukos &gt; Camiseta Dupla Face Cobra KAI dOÔ</tspan></text>
+    <text id="Acesse_sua_conta" data-name="Acesse sua conta" transform="translate(23 84)" font-size="16" font-family="Raleway-Bold, Raleway" font-weight="700"><tspan x="0" y="0">Acesse sua conta</tspan></text>
+    <rect id="Retângulo_43" data-name="Retângulo 43" width="368" height="407" rx="4" transform="translate(23 148)" fill="#fff"/>
+    <path id="Retângulo_43_-_Contorno" data-name="Retângulo 43 - Contorno" d="M4,1A3,3,0,0,0,1,4V403a3,3,0,0,0,3,3H364a3,3,0,0,0,3-3V4a3,3,0,0,0-3-3H4M4,0H364a4,4,0,0,1,4,4V403a4,4,0,0,1-4,4H4a4,4,0,0,1-4-4V4A4,4,0,0,1,4,0Z" transform="translate(23 148)" fill="#d8d8d8"/>
+    <rect id="Retângulo_46" data-name="Retângulo 46" width="336" height="58" rx="4" transform="translate(39 168)" fill="#fff"/>
+    <path id="Retângulo_46_-_Contorno" data-name="Retângulo 46 - Contorno" d="M4,1A3,3,0,0,0,1,4V54a3,3,0,0,0,3,3H332a3,3,0,0,0,3-3V4a3,3,0,0,0-3-3H4M4,0H332a4,4,0,0,1,4,4V54a4,4,0,0,1-4,4H4a4,4,0,0,1-4-4V4A4,4,0,0,1,4,0Z" transform="translate(39 168)" fill="#d8d8d8"/>
+    <rect id="Retângulo_45" data-name="Retângulo 45" width="336" height="58" rx="4" transform="translate(39 256)" fill="#fff"/>
+    <path id="Retângulo_45_-_Contorno" data-name="Retângulo 45 - Contorno" d="M4,1A3,3,0,0,0,1,4V54a3,3,0,0,0,3,3H332a3,3,0,0,0,3-3V4a3,3,0,0,0-3-3H4M4,0H332a4,4,0,0,1,4,4V54a4,4,0,0,1-4,4H4a4,4,0,0,1-4-4V4A4,4,0,0,1,4,0Z" transform="translate(39 256)" fill="#d8d8d8"/>
+    <rect id="Retângulo_44" data-name="Retângulo 44" width="336" height="58" rx="4" transform="translate(39 359)" fill="#0164fe"/>
+    <text id="Senha" transform="translate(92 291)" fill="rgba(0,0,0,0.5)" font-size="16" font-family="Raleway-Regular, Raleway"><tspan x="0" y="0">Senha</tspan></text>
+    <text id="Email_CPF_ou_CPNJ" data-name="Email, CPF ou CPNJ" transform="translate(94 203)" fill="rgba(0,0,0,0.5)" font-size="16" font-family="Raleway-Regular, Raleway"><tspan x="0" y="0">Email, CPF ou CPNJ</tspan></text>
+    <path id="Icon_awesome-user-alt" data-name="Icon awesome-user-alt" d="M10.077,11.337A5.668,5.668,0,1,0,4.409,5.668,5.67,5.67,0,0,0,10.077,11.337Zm5.039,1.26H12.947a6.852,6.852,0,0,1-5.739,0H5.039A5.038,5.038,0,0,0,0,17.635v.63a1.89,1.89,0,0,0,1.889,1.889H18.265a1.89,1.89,0,0,0,1.889-1.889v-.63A5.038,5.038,0,0,0,15.116,12.6Z" transform="translate(59 187)" fill="rgba(0,0,0,0.5)"/>
+    <path id="Icon_awesome-lock" data-name="Icon awesome-lock" d="M15.625,8.75h-.937V5.938a5.937,5.937,0,1,0-11.875,0V8.75H1.875A1.875,1.875,0,0,0,0,10.625v7.5A1.875,1.875,0,0,0,1.875,20h13.75A1.875,1.875,0,0,0,17.5,18.125v-7.5A1.875,1.875,0,0,0,15.625,8.75Zm-4.062,0H5.938V5.938a2.813,2.813,0,0,1,5.625,0Z" transform="translate(59.5 275)" fill="rgba(0,0,0,0.5)"/>
+    <text id="ENTrar" transform="translate(171 395)" fill="#fff" font-size="18" font-family="Raleway-Bold, Raleway" font-weight="700"><tspan x="0" y="0">ENTRAR</tspan></text>
+    <rect id="Retângulo_47" data-name="Retângulo 47" width="336" height="58" rx="4" transform="translate(39 477.63)" fill="#0164fe"/>
+    <text id="Primeiro_acesso_Cadastre-se" data-name="Primeiro acesso?Cadastre-se" transform="translate(228.379 502.63)" fill="#fff" font-size="16" font-family="Raleway-Bold, Raleway" font-weight="700"><tspan x="-74.736" y="0">PRIMEIRO ACESSO?</tspan><tspan x="-54.456" y="19">CADASTRE-SE</tspan></text>
+    <path id="Icon_awesome-user-plus" data-name="Icon awesome-user-plus" d="M24.375,8.125h-2.5v-2.5A.627.627,0,0,0,21.25,5H20a.627.627,0,0,0-.625.625v2.5h-2.5a.627.627,0,0,0-.625.625V10a.627.627,0,0,0,.625.625h2.5v2.5A.627.627,0,0,0,20,13.75h1.25a.627.627,0,0,0,.625-.625v-2.5h2.5A.627.627,0,0,0,25,10V8.75A.627.627,0,0,0,24.375,8.125ZM8.75,10a5,5,0,1,0-5-5A5,5,0,0,0,8.75,10Zm3.5,1.25H11.6a6.8,6.8,0,0,1-5.7,0H5.25A5.251,5.251,0,0,0,0,16.5v1.625A1.875,1.875,0,0,0,1.875,20h13.75A1.875,1.875,0,0,0,17.5,18.125V16.5A5.251,5.251,0,0,0,12.25,11.25Z" transform="translate(108.689 496.63)" fill="#fff"/>
+    <path id="Linha_2" data-name="Linha 2" d="M336,.5H0v-1H336Z" transform="translate(39 447)" fill="#707070"/>
+  </g>
+</svg>
