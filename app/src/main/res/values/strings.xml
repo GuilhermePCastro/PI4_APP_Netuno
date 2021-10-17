@@ -15,4 +15,6 @@
     <string name="meus_pedidos">Meus pedidos</string>
     <string name="abrir_menu">Abrir menu</string>
     <string name="fechar_menu">Fechar menu</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
