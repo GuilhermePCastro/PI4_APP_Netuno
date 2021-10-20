@@ -8,7 +8,9 @@
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/activity_login.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/activity_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/activity_profile.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/fragment_produto_desc.xml" value="0.75" />
+        <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/fragment_carrinho.xml" value="0.25" />
+        <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/fragment_produto_desc.xml" value="0.22" />
+        <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/produto_carrinho.xml" value="0.33" />
         <entry key="..\:/Users/Luiz/Documents/GitHub/PI4_APP_Netuno/app/src/main/res/layout/activity_login.xml" value="0.5" />
         <entry key="..\:/Users/Luiz/Documents/GitHub/PI4_APP_Netuno/app/src/main/res/layout/activity_profile.xml" value="0.5" />
         <entry key="..\:/Users/Luiz/Documents/GitHub/PI4_APP_Netuno/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3828125" />
