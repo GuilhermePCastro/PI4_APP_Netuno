@@ -25,7 +25,7 @@
             android:orientation="horizontal">
 
             <TableLayout
-                android:id="@+id/tableLayout"
+                android:id="@+id/colPedido"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
