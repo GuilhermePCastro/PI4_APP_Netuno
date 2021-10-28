@@ -13,6 +13,12 @@
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
+        <item name="android:logo">@drawable/ic_baseline_add_24</item>
+        <item name="android:displayOptions">useLogo|showHome</item>
         <!-- Customize your theme here. -->
+
+
     </style>
+
 </resources>

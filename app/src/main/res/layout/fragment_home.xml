@@ -11,11 +11,18 @@
         android:id="@+id/scrollViewHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F3F3F3">
+        android:background="#F3F3F3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="200dp"
             android:orientation="vertical">
 
             <ImageView
@@ -39,15 +46,16 @@
 
             <HorizontalScrollView
                 android:id="@+id/scrollDes"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
 
                 <LinearLayout
                     android:id="@+id/conDestaques"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="25dp"
-                    android:orientation="vertical" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
             </HorizontalScrollView>
 
             <TextView
@@ -61,18 +69,22 @@
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
-            <androidx.core.widget.NestedScrollView
+            <HorizontalScrollView
                 android:id="@+id/scrollLan"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp">
 
                 <LinearLayout
                     android:id="@+id/conLancamentos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
-            </androidx.core.widget.NestedScrollView>
+                    android:baselineAligned="false"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"/>
+            </HorizontalScrollView>
 
         </LinearLayout>
     </ScrollView>
