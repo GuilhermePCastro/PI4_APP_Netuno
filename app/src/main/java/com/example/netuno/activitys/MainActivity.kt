@@ -8,6 +8,7 @@ import com.example.netuno.R
 import com.example.netuno.databinding.ActivityMainBinding
 import com.example.netuno.fragments.CarrinhoFragment
 import com.example.netuno.fragments.HistoricoCompraFragment
+import com.example.netuno.fragments.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -21,11 +22,15 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.perfil -> supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, HistoricoCompraFragment()).commit()
+                    .replace(R.id.container, HistoricoCompraFragment()).addToBackStack("fragHome").commit()
+                R.id.home -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, HomeFragment()).commit()
             }
 
             true
         }
+
+        binding.bottomNav.selectedItemId = R.id.home
 
 
     }
@@ -38,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.carrinho -> {
-                supportFragmentManager.beginTransaction().replace(R.id.container, CarrinhoFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.container, CarrinhoFragment()).addToBackStack("fragHome").commit()
 
             }
         }
