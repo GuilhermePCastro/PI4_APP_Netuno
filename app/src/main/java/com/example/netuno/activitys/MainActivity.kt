@@ -7,6 +7,7 @@ import android.view.MenuItem
 import com.example.netuno.R
 import com.example.netuno.databinding.ActivityMainBinding
 import com.example.netuno.fragments.CarrinhoFragment
+import com.example.netuno.fragments.CategoriasFragment
 import com.example.netuno.fragments.HistoricoCompraFragment
 import com.example.netuno.fragments.HomeFragment
 
@@ -29,6 +30,8 @@ class MainActivity : AppCompatActivity() {
                     .replace(R.id.container, HistoricoCompraFragment()).addToBackStack("fragHome").commit()
                 R.id.home -> supportFragmentManager.beginTransaction()
                     .replace(R.id.container, HomeFragment()).commit()
+                R.id.categoria -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, CategoriasFragment()).commit()
             }
 
             true
