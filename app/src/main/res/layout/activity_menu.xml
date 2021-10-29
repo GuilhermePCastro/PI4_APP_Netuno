@@ -17,7 +17,7 @@
     </com.google.android.material.navigation.NavigationView>
 
     <FrameLayout
-        android:id="@+id/container"
+        android:id="@+id/containerHistCompra"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

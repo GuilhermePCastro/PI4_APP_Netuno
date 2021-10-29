@@ -6,10 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.netuno.R
 import com.example.netuno.databinding.ActivityMainBinding
-import com.example.netuno.fragments.CarrinhoFragment
-import com.example.netuno.fragments.CategoriasFragment
-import com.example.netuno.fragments.HistoricoCompraFragment
-import com.example.netuno.fragments.HomeFragment
+import com.example.netuno.fragments.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -27,11 +24,11 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.perfil -> supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, HistoricoCompraFragment()).addToBackStack("fragHome").commit()
+                    .replace(R.id.containerHistCompra, ListaPerfilFragment()).addToBackStack("fragHome").commit()
                 R.id.home -> supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, HomeFragment()).commit()
+                    .replace(R.id.containerHistCompra, HomeFragment()).addToBackStack("fragHome").commit()
                 R.id.categoria -> supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, CategoriasFragment()).commit()
+                    .replace(R.id.containerHistCompra, CategoriasFragment()).addToBackStack("fragHome").commit()
             }
 
             true
@@ -50,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.carrinho -> {
-                supportFragmentManager.beginTransaction().replace(R.id.container, CarrinhoFragment()).addToBackStack("fragHome").commit()
+                supportFragmentManager.beginTransaction().replace(R.id.containerHistCompra, CarrinhoFragment()).addToBackStack("fragHome").commit()
 
             }
         }

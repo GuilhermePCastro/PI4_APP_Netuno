@@ -20,15 +20,34 @@ class CategoriasFragment : Fragment() {
 
         val categoria = CardCategoriaBinding.inflate((layoutInflater))
         categoria.lblCategoriaLista.text = "Camisas"
-        binding.container.addView(categoria.root)
+        binding.containerCategorias.addView(categoria.root)
 
         val categoria2 = CardCategoriaBinding.inflate((layoutInflater))
         categoria2.lblCategoriaLista.text = "Colecionáveis"
-        binding.container.addView(categoria2.root)
+        binding.containerCategorias.addView(categoria2.root)
 
         val categoria3 = CardCategoriaBinding.inflate((layoutInflater))
         categoria3.lblCategoriaLista.text = "Estátuas"
-        binding.container.addView(categoria3.root)
+        binding.containerCategorias.addView(categoria3.root)
+
+        categoria.card.setOnClickListener {
+            container?.let{
+                parentFragmentManager.beginTransaction().replace(it.id, ListaProdutosFragment()).addToBackStack("listaPerfil").commit()
+            }
+        }
+
+        categoria2.card.setOnClickListener {
+            container?.let{
+                parentFragmentManager.beginTransaction().replace(it.id, ListaProdutosFragment()).addToBackStack("listaPerfil").commit()
+            }
+        }
+
+        categoria3.card.setOnClickListener {
+            container?.let{
+                parentFragmentManager.beginTransaction().replace(it.id, ListaProdutosFragment()).addToBackStack("listaPerfil").commit()
+            }
+        }
+
 
         return binding.root
     }
