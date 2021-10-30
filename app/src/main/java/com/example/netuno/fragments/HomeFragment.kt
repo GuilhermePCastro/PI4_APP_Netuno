@@ -28,6 +28,7 @@ class HomeFragment : Fragment() {
     lateinit var  binding: FragmentHomeBinding
 
     lateinit var ctx: Context
+    lateinit var containerFrag: ViewGroup
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -36,7 +37,14 @@ class HomeFragment : Fragment() {
             ctx = container.context
         }
 
+        if (container != null) {
+            containerFrag = container
+        }
+
+
+
         atualizarDestaques()
+        atualizarLancamentos()
 
         return binding.root
     }
@@ -45,6 +53,7 @@ class HomeFragment : Fragment() {
         super.onResume()
 
         atualizarDestaques()
+        atualizarLancamentos()
     }
 
     fun atualizarDestaques(){
@@ -54,7 +63,7 @@ class HomeFragment : Fragment() {
 
                 if(response.isSuccessful){
                     val produtos = response.body()
-                    atualizarUI(produtos)
+                    atualizarUIDestaques(produtos)
                 }else{
                     Snackbar.make(binding.conDestaques,"Não é possível atualizar os destaques",
                         Snackbar.LENGTH_LONG).show()
@@ -72,19 +81,19 @@ class HomeFragment : Fragment() {
             }
 
         }
-        API(ctx).produto.index().enqueue(callback)
+        API(ctx).produto.destaques().enqueue(callback)
 
 
     }
 
-    fun atualizarUI(lista: List<Produto>?){
+    fun atualizarUIDestaques(lista: List<Produto>?){
         binding.conDestaques.removeAllViews()
 
         lista?.forEach{
             val cardBinding = ProdutoCardBinding.inflate(layoutInflater)
 
             cardBinding.lblNomeProdutoCard.text = it.ds_nome
-            cardBinding.lblPrecoProdutoCard.text = it.vl_produto.toString()
+            cardBinding.lblPrecoProdutoCard.text = "R$ "+ it.vl_produto.toString()
 
             //Montando o shimmer para o picaso usar
             val s = Shimmer.ColorHighlightBuilder()
@@ -99,13 +108,92 @@ class HomeFragment : Fragment() {
             val sDrawable = ShimmerDrawable()
             sDrawable.setShimmer(s)
 
-            Picasso.get()
-                .load("https://rockcontent.com/br/wp-content/uploads/sites/2/2019/03/tamanho-imagem-blog.png")
-                .placeholder(sDrawable)
-                .error(R.drawable.no_image)
-                .into(cardBinding.imageView3)
+            if(it.ds_linkfoto.isNotEmpty()){
+                Picasso.get()
+                    .load(it.ds_linkfoto)
+                    .placeholder(sDrawable)
+                    .error(R.drawable.no_image)
+                    .into(cardBinding.imageView3)
+            }
 
+            cardBinding.card.setOnClickListener{
+                containerFrag?.let {
+                    parentFragmentManager.beginTransaction().replace(it.id, ProdutoDescFragment())
+                        .addToBackStack("Home").commit()
+                }
+            }
             binding.conDestaques.addView(cardBinding.root)
+
+        }
+    }
+
+    fun atualizarLancamentos(){
+
+        val callback = object : Callback<List<Produto>> {
+            override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
+
+                if(response.isSuccessful){
+                    val produtos = response.body()
+                    atualizarUILancamentos(produtos)
+                }else{
+                    Snackbar.make(binding.conLancamentos,"Não é possível atualizar os lançamentos",
+                        Snackbar.LENGTH_LONG).show()
+
+                    Log.e("ERROR", response.errorBody().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
+                Snackbar.make(binding.conLancamentos,"Não é possível se conectar ao servidor",
+                    Snackbar.LENGTH_LONG).show()
+
+                Log.e("ERROR", "Falha ao executar serviço", t)
+
+            }
+
+        }
+        API(ctx).produto.lancamentos().enqueue(callback)
+
+
+    }
+
+    fun atualizarUILancamentos(lista: List<Produto>?){
+        binding.conLancamentos.removeAllViews()
+
+        lista?.forEach{
+            val cardBinding = ProdutoCardBinding.inflate(layoutInflater)
+
+            cardBinding.lblNomeProdutoCard.text = it.ds_nome
+            cardBinding.lblPrecoProdutoCard.text = "R$ "+ it.vl_produto.toString()
+
+            val s = Shimmer.ColorHighlightBuilder()
+                .setAutoStart(true)
+                .setDuration(1000)
+                .setBaseColor(Color.GRAY)
+                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
+                .setHighlightColor(Color.WHITE)
+                .setBaseAlpha(0.8f)
+                .build()
+
+            val sDrawable = ShimmerDrawable()
+            sDrawable.setShimmer(s)
+
+            if(it.ds_linkfoto.isNotEmpty()){
+                Picasso.get()
+                    .load(it.ds_linkfoto)
+                    .placeholder(sDrawable)
+                    .error(R.drawable.no_image)
+                    .into(cardBinding.imageView3)
+            }
+
+            cardBinding.card.setOnClickListener{
+                containerFrag?.let {
+                    parentFragmentManager.beginTransaction().replace(it.id, ProdutoDescFragment())
+                        .addToBackStack("Home").commit()
+                }
+            }
+
+            binding.conLancamentos.addView(cardBinding.root)
         }
     }
 
