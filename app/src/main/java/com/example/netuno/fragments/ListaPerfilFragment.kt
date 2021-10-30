@@ -27,8 +27,8 @@ class ListaPerfilFragment : Fragment() {
 
         binding.linha2.setOnClickListener {
             container?.let{
-                //val i = Intent(, Profile::class.java)
-                //startActivity(i)
+                val i = Intent(container.context, Profile::class.java)
+                startActivity(i)
 
             }
         }

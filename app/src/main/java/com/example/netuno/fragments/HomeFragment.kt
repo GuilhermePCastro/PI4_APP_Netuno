@@ -24,42 +24,82 @@ class HomeFragment : Fragment() {
         cardProduto.lblNomeProdutoCard.text = "Produto 1"
         cardProduto.lblPrecoProdutoCard.text = "R$ 99,99"
         binding.conDestaques.addView(cardProduto.root)
+        cardProduto.card.setOnClickListener {
+            container?.let{
+                parentFragmentManager.beginTransaction().replace(it.id, ProdutoDescFragment()).addToBackStack("listaPerfil").commit()
+            }
+        }
 
         val cardProduto2 = ProdutoCardBinding.inflate((layoutInflater))
         cardProduto2.lblNomeProdutoCard.text = "Produto 2"
         cardProduto2.lblPrecoProdutoCard.text = "R$ 299,99"
         binding.conDestaques.addView(cardProduto2.root)
+        cardProduto2.card.setOnClickListener {
+            container?.let{
+                parentFragmentManager.beginTransaction().replace(it.id, ProdutoDescFragment()).addToBackStack("listaPerfil").commit()
+            }
+        }
 
         val cardProduto3 = ProdutoCardBinding.inflate((layoutInflater))
         cardProduto3.lblNomeProdutoCard.text = "Produto 3"
         cardProduto3.lblPrecoProdutoCard.text = "R$ 499,99"
         binding.conDestaques.addView(cardProduto3.root)
+        cardProduto3.card.setOnClickListener {
+            container?.let{
+                parentFragmentManager.beginTransaction().replace(it.id, ProdutoDescFragment()).addToBackStack("listaPerfil").commit()
+            }
+        }
 
         val cardProduto4 = ProdutoCardBinding.inflate((layoutInflater))
         cardProduto4.lblNomeProdutoCard.text = "Produto 4"
         cardProduto4.lblPrecoProdutoCard.text = "R$ 999,99"
         binding.conDestaques.addView(cardProduto4.root)
+        cardProduto4.card.setOnClickListener {
+            container?.let{
+                parentFragmentManager.beginTransaction().replace(it.id, ProdutoDescFragment()).addToBackStack("listaPerfil").commit()
+            }
+        }
 
 
         val cardProduto5 = ProdutoCardBinding.inflate((layoutInflater))
         cardProduto5.lblNomeProdutoCard.text = "Produto 1"
         cardProduto5.lblPrecoProdutoCard.text = "R$ 99,99"
         binding.conLancamentos.addView(cardProduto5.root)
+        cardProduto5.card.setOnClickListener {
+            container?.let{
+                parentFragmentManager.beginTransaction().replace(it.id, ProdutoDescFragment()).addToBackStack("listaPerfil").commit()
+            }
+        }
 
         val cardProduto6 = ProdutoCardBinding.inflate((layoutInflater))
         cardProduto6.lblNomeProdutoCard.text = "Produto 2"
         cardProduto6.lblPrecoProdutoCard.text = "R$ 299,99"
         binding.conLancamentos.addView(cardProduto6.root)
+        cardProduto6.card.setOnClickListener {
+            container?.let{
+                parentFragmentManager.beginTransaction().replace(it.id, ProdutoDescFragment()).addToBackStack("listaPerfil").commit()
+            }
+        }
 
         val cardProduto7 = ProdutoCardBinding.inflate((layoutInflater))
         cardProduto7.lblNomeProdutoCard.text = "Produto 3"
         cardProduto7.lblPrecoProdutoCard.text = "R$ 499,99"
         binding.conLancamentos.addView(cardProduto7.root)
+        cardProduto7.card.setOnClickListener {
+            container?.let{
+                parentFragmentManager.beginTransaction().replace(it.id, ProdutoDescFragment()).addToBackStack("listaPerfil").commit()
+            }
+        }
 
         val cardProduto8 = ProdutoCardBinding.inflate((layoutInflater))
         cardProduto8.lblNomeProdutoCard.text = "Produto 4"
         cardProduto8.lblPrecoProdutoCard.text = "R$ 999,99"
         binding.conLancamentos.addView(cardProduto8.root)
+        cardProduto8.card.setOnClickListener {
+            container?.let{
+                parentFragmentManager.beginTransaction().replace(it.id, ProdutoDescFragment()).addToBackStack("listaPerfil").commit()
+            }
+        }
 
         return binding.root
     }
