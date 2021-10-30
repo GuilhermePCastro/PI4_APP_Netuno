@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/drawable/bottom_nv_selected.xml" value="0.2203125" />
+        <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/drawable/circle.xml" value="0.2203125" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.2203125" />
+        <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/drawable/no_image.xml" value="0.2203125" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.10859375" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout-w936dp/activity_login.xml" value="0.153125" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/activity_login.xml" value="0.20416666666666666" />

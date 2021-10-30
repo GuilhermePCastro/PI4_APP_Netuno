@@ -66,7 +66,7 @@
 
                         <TextView
                             android:id="@+id/lblPreco"
-                            android:layout_width="177dp"
+                            android:layout_width="158dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:text="R$ 99,99"

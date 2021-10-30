@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#E4E3E3"
     android:orientation="vertical"
     tools:context=".fragments.ListaPerfilFragment">
 
@@ -17,7 +17,7 @@
             android:id="@+id/linha1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
+            android:background="#FFFFFF"
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
@@ -29,7 +29,7 @@
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="288dp"
+                android:layout_width="248dp"
                 android:layout_height="wrap_content"
                 android:text="Meus Pedidos"
                 android:textColor="@color/secondary_light"
@@ -48,7 +48,10 @@
         <TableRow
             android:id="@+id/linha2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
             <ImageView
                 android:id="@+id/imageView7"
