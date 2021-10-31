@@ -32,4 +32,9 @@ class API(val context: Context){
         get(){
             return retrofit.create(ProdutoAPI::class.java)
         }
+
+    val categoria: CategoriaAPI
+        get(){
+            return retrofit.create(CategoriaAPI::class.java)
+        }
 }

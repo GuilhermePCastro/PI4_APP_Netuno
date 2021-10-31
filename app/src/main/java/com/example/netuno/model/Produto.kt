@@ -7,7 +7,7 @@ data class Produto(
 	val ds_foto: String,
 	val tg_destaque: Int,
 	val vl_produto: Double,
-	val createdAt: DateTimeException,
+	val createdAt: String,
 	val categoriaId: Int,
 	val deletedAt: Any,
 	val ds_descricao: String,
