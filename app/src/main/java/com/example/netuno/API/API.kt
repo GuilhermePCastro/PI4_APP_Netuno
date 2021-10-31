@@ -1,6 +1,8 @@
 package com.example.netuno.API
 
 import android.content.Context
+import android.nfc.Tag
+import com.example.netuno.model.Marca
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -36,5 +38,15 @@ class API(val context: Context){
     val categoria: CategoriaAPI
         get(){
             return retrofit.create(CategoriaAPI::class.java)
+        }
+
+    val tag: TagAPI
+        get(){
+            return retrofit.create(TagAPI::class.java)
+        }
+
+    val marca: MarcaAPI
+        get(){
+            return retrofit.create(MarcaAPI::class.java)
         }
 }

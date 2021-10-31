@@ -15,5 +15,5 @@ interface CategoriaAPI {
     fun show(@Path("id") id: Int): Call<Categoria>
 
     @GET("/api/categoria/{id}/produtos")
-    fun produtos(): Call<List<Produto>>
+    fun produtos(@Path("id") id: Int): Call<List<Produto>>
 }

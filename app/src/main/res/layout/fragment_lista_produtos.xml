@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ListaProdutosFragment" >
+    tools:context=".fragments.ListaProdutosFragment">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,5 +39,21 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/lblSemProd"
+        android:layout_width="302dp"
+        android:layout_height="103dp"
+        android:text="Desculpe, essa categoria não contém produtos ainda :("
+        android:textAlignment="center"
+        android:textColor="#C3C3C3"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scrollView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

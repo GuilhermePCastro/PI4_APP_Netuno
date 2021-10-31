@@ -15,6 +15,8 @@ import com.example.netuno.databinding.ActivityMainBinding
 import com.example.netuno.databinding.FragmentHomeBinding
 import com.example.netuno.databinding.ProdutoCardBinding
 import com.example.netuno.model.Produto
+import com.example.netuno.ui.formataNumero
+import com.example.netuno.ui.montaShimmerPicaso
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.google.android.material.snackbar.Snackbar
@@ -93,20 +95,11 @@ class HomeFragment : Fragment() {
             val cardBinding = ProdutoCardBinding.inflate(layoutInflater)
 
             cardBinding.lblNomeProdutoCard.text = it.ds_nome
-            cardBinding.lblPrecoProdutoCard.text = "R$ "+ it.vl_produto.toString()
+            cardBinding.lblPrecoProdutoCard.text = "R$ ${formataNumero(it.vl_produto, "dinheiro")}"
+            cardBinding.lblcategoriaProd.text = it.categoria.ds_categoria
 
             //Montando o shimmer para o picaso usar
-            val s = Shimmer.ColorHighlightBuilder()
-                .setAutoStart(true)
-                .setDuration(1000)
-                .setBaseColor(Color.GRAY)
-                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
-                .setHighlightColor(Color.WHITE)
-                .setBaseAlpha(0.8f)
-                .build()
-
-            val sDrawable = ShimmerDrawable()
-            sDrawable.setShimmer(s)
+            var sDrawable = montaShimmerPicaso()
 
             if(it.ds_linkfoto.isNotEmpty()){
                 Picasso.get()
@@ -116,9 +109,11 @@ class HomeFragment : Fragment() {
                     .into(cardBinding.imageView3)
             }
 
+            var prodId = it.id
+
             cardBinding.card.setOnClickListener{
                 containerFrag?.let {
-                    parentFragmentManager.beginTransaction().replace(it.id, ProdutoDescFragment())
+                    parentFragmentManager.beginTransaction().replace(it.id, ProdutoDescFragment.newInstance(prodId))
                         .addToBackStack("Home").commit()
                 }
             }
@@ -164,19 +159,10 @@ class HomeFragment : Fragment() {
             val cardBinding = ProdutoCardBinding.inflate(layoutInflater)
 
             cardBinding.lblNomeProdutoCard.text = it.ds_nome
-            cardBinding.lblPrecoProdutoCard.text = "R$ "+ it.vl_produto.toString()
+            cardBinding.lblPrecoProdutoCard.text = "R$ ${formataNumero(it.vl_produto, "dinheiro")}"
+            cardBinding.lblcategoriaProd.text = it.categoria.ds_categoria
 
-            val s = Shimmer.ColorHighlightBuilder()
-                .setAutoStart(true)
-                .setDuration(1000)
-                .setBaseColor(Color.GRAY)
-                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
-                .setHighlightColor(Color.WHITE)
-                .setBaseAlpha(0.8f)
-                .build()
-
-            val sDrawable = ShimmerDrawable()
-            sDrawable.setShimmer(s)
+            var sDrawable = montaShimmerPicaso()
 
             if(it.ds_linkfoto.isNotEmpty()){
                 Picasso.get()

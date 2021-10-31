@@ -47,6 +47,7 @@ class CategoriasFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onResume(){
         super.onResume()
 
@@ -90,9 +91,15 @@ class CategoriasFragment : Fragment() {
 
             cardBinding.lblCategoriaLista.text = it.ds_categoria
 
+           var catId = it.id
+           var catNome = it.ds_categoria
+
+
             cardBinding.card.setOnClickListener{
                 containerCat?.let {
-                    parentFragmentManager.beginTransaction().replace(it.id, ListaProdutosFragment())
+                    parentFragmentManager
+                        .beginTransaction()
+                        .replace(it.id, ListaProdutosFragment.newInstance(catId, catNome))
                         .addToBackStack("ListaCategoria").commit()
                 }
             }
@@ -100,5 +107,7 @@ class CategoriasFragment : Fragment() {
 
         }
     }
+
+
 
 }

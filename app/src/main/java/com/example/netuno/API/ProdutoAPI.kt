@@ -16,7 +16,7 @@ interface ProdutoAPI {
     fun lancamentos(): Call<List<Produto>>
 
     @GET("/api/produto/{id}")
-    fun show(@Path("id") id: Int): Call<Produto>
+    fun show(@Path("id") id: Int): Call<List<Produto>>
 
     @GET("/api/produto/filtro")
     fun filtro(@Query("nome") nome: String): Call<List<Produto>>

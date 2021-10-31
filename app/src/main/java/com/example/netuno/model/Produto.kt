@@ -18,5 +18,8 @@ data class Produto(
 	val ds_peso: String,
 	val marcaId: Int,
 	val ds_material: String,
-	val ds_linkfoto: String
+	val ds_linkfoto: String,
+	val tags: List<Tag>,
+	val categoria: Categoria,
+	val marca: Marca
 )
