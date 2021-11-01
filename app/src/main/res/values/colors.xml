@@ -10,5 +10,5 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="placeholder_grey">#EAEAEA</color>
+    <color name="placeholder_grey">#CDCDCD</color>
 </resources>

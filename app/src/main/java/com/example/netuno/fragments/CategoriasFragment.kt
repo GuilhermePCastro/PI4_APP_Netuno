@@ -58,7 +58,7 @@ class CategoriasFragment : Fragment() {
 
         val callback = object : Callback<List<Categoria>> {
             override fun onResponse(call: Call<List<Categoria>>, response: Response<List<Categoria>>) {
-
+                CarregaOff()
                 if(response.isSuccessful){
                     val categorias = response.body()
                     atualizarUI(categorias)
@@ -71,6 +71,7 @@ class CategoriasFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<Categoria>>, t: Throwable) {
+                CarregaOff()
                 Snackbar.make(binding.containerCategorias,"Não é possível se conectar ao servidor",
                     Snackbar.LENGTH_LONG).show()
 
@@ -80,6 +81,7 @@ class CategoriasFragment : Fragment() {
 
         }
         API(ctx).categoria.index().enqueue(callback)
+        CarregaOn()
 
     }
 
@@ -105,7 +107,18 @@ class CategoriasFragment : Fragment() {
             }
             binding.containerCategorias.addView(cardBinding.root)
 
+
         }
+    }
+
+    fun CarregaOn(){
+        binding.shimmerListCat.visibility = View.VISIBLE
+        binding.shimmerListCat.startShimmer()
+    }
+
+    fun CarregaOff(){
+        binding.shimmerListCat.visibility = View.GONE
+        binding.shimmerListCat.stopShimmer()
     }
 
 

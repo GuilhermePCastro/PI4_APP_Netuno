@@ -43,7 +43,10 @@ class HomeFragment : Fragment() {
             containerFrag = container
         }
 
-
+        binding.swiperHome.setOnRefreshListener {
+            atualizarDestaques()
+            atualizarLancamentos()
+        }
 
         atualizarDestaques()
         atualizarLancamentos()
@@ -62,7 +65,7 @@ class HomeFragment : Fragment() {
 
         val callback = object : Callback<List<Produto>> {
             override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
-
+                CarregaOff()
                 if(response.isSuccessful){
                     val produtos = response.body()
                     atualizarUIDestaques(produtos)
@@ -75,6 +78,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
+                CarregaOff()
                 Snackbar.make(binding.conDestaques,"Não é possível se conectar ao servidor",
                     Snackbar.LENGTH_LONG).show()
 
@@ -84,6 +88,7 @@ class HomeFragment : Fragment() {
 
         }
         API(ctx).produto.destaques().enqueue(callback)
+        CarregaOn()
 
 
     }
@@ -106,7 +111,7 @@ class HomeFragment : Fragment() {
                     .load(it.ds_linkfoto)
                     .placeholder(sDrawable)
                     .error(R.drawable.no_image)
-                    .into(cardBinding.imageView3)
+                    .into(cardBinding.imgProdutoHome)
             }
 
             var prodId = it.id
@@ -126,6 +131,7 @@ class HomeFragment : Fragment() {
 
         val callback = object : Callback<List<Produto>> {
             override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
+                CarregaOff()
 
                 if(response.isSuccessful){
                     val produtos = response.body()
@@ -139,6 +145,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
+                CarregaOff()
                 Snackbar.make(binding.conLancamentos,"Não é possível se conectar ao servidor",
                     Snackbar.LENGTH_LONG).show()
 
@@ -148,6 +155,7 @@ class HomeFragment : Fragment() {
 
         }
         API(ctx).produto.lancamentos().enqueue(callback)
+        CarregaOn()
 
 
     }
@@ -169,7 +177,7 @@ class HomeFragment : Fragment() {
                     .load(it.ds_linkfoto)
                     .placeholder(sDrawable)
                     .error(R.drawable.no_image)
-                    .into(cardBinding.imageView3)
+                    .into(cardBinding.imgProdutoHome)
             }
 
             cardBinding.card.setOnClickListener{
@@ -181,6 +189,22 @@ class HomeFragment : Fragment() {
 
             binding.conLancamentos.addView(cardBinding.root)
         }
+    }
+
+    fun CarregaOn(){
+        binding.shimmerDes.visibility = View.VISIBLE
+        binding.shimmerLan.visibility = View.VISIBLE
+        binding.shimmerDes.startShimmer()
+        binding.shimmerDes.startShimmer()
+        binding.swiperHome.isRefreshing = true
+    }
+
+    fun CarregaOff(){
+        binding.shimmerDes.visibility = View.GONE
+        binding.shimmerLan.visibility = View.GONE
+        binding.shimmerDes.stopShimmer()
+        binding.shimmerDes.stopShimmer()
+        binding.swiperHome.isRefreshing = false
     }
 
 

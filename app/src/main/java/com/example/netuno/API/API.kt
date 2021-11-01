@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 class API(val context: Context){
 
     private val baseUrl = "http://10.0.2.2:8000"
-    private val timeout = 100L
+    private val timeout = 15L
 
     private val retrofit: Retrofit
         get(){

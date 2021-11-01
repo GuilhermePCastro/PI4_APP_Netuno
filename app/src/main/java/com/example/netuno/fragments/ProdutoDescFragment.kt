@@ -64,7 +64,7 @@ class ProdutoDescFragment : Fragment() {
 
         val callback = object : Callback<List<Produto>> {
             override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
-
+                CarregaOff()
                 if(response.isSuccessful){
                     val produto = response.body()
                     if (produto != null) {
@@ -80,6 +80,7 @@ class ProdutoDescFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
+                CarregaOff()
                 Snackbar.make(binding.scrollProdDesc,"Não é possível se conectar ao servidor",
                     Snackbar.LENGTH_LONG).show()
 
@@ -91,6 +92,7 @@ class ProdutoDescFragment : Fragment() {
 
         if (prodId != null) {
             API(ctx).produto.show(prodId!!).enqueue(callback)
+            CarregaOn()
         }
 
 
@@ -131,6 +133,17 @@ class ProdutoDescFragment : Fragment() {
 
         }
     }
+
+    fun CarregaOn(){
+        binding.shimmerProdDesc.visibility = View.VISIBLE
+        binding.shimmerProdDesc.startShimmer()
+    }
+
+    fun CarregaOff(){
+        binding.shimmerProdDesc.visibility = View.GONE
+        binding.shimmerProdDesc.stopShimmer()
+    }
+
     companion object{
         @JvmStatic
         fun newInstance(id: Int) =
