@@ -44,6 +44,10 @@ class CategoriasFragment : Fragment() {
 
         atualizarCategorias()
 
+        binding.swipperListCat.setOnRefreshListener {
+            atualizarCategorias()
+        }
+
         return binding.root
     }
 
@@ -114,11 +118,13 @@ class CategoriasFragment : Fragment() {
     fun CarregaOn(){
         binding.shimmerListCat.visibility = View.VISIBLE
         binding.shimmerListCat.startShimmer()
+        binding.swipperListCat.isRefreshing = true
     }
 
     fun CarregaOff(){
         binding.shimmerListCat.visibility = View.GONE
         binding.shimmerListCat.stopShimmer()
+        binding.swipperListCat.isRefreshing = false
     }
 
 

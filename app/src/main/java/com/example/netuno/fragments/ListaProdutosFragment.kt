@@ -65,6 +65,10 @@ class ListaProdutosFragment : Fragment() {
         //Carrega os produtos da categoria
         addListaProdutos()
 
+        binding.swipperListProd.setOnRefreshListener {
+            addListaProdutos()
+        }
+
 
         return binding.root
     }
@@ -73,7 +77,7 @@ class ListaProdutosFragment : Fragment() {
 
         val callback = object : Callback<List<Produto>> {
             override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
-
+                CarregaOff()
                 if(response.isSuccessful){
                     val produtos = response.body()
                     atualizarUI(produtos)
@@ -86,6 +90,7 @@ class ListaProdutosFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
+                CarregaOff()
                 Snackbar.make(binding.containerListProd,"Não é possível se conectar ao servidor",
                     Snackbar.LENGTH_LONG).show()
 
@@ -99,6 +104,7 @@ class ListaProdutosFragment : Fragment() {
         }else{
             API(ctx).categoria.produtos(catId!!).enqueue(callback)
         }
+        CarregaOn()
 
     }
 
@@ -142,6 +148,18 @@ class ListaProdutosFragment : Fragment() {
         }
 
 
+    }
+
+    fun CarregaOn(){
+        binding.shimmerListProd.visibility = View.VISIBLE
+        binding.shimmerListProd.startShimmer()
+        binding.swipperListProd.isRefreshing = true
+    }
+
+    fun CarregaOff(){
+        binding.shimmerListProd.visibility = View.GONE
+        binding.shimmerListProd.stopShimmer()
+        binding.swipperListProd.isRefreshing = false
     }
 
 
