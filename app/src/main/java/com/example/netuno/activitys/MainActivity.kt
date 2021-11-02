@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         supportActionBar?.setDisplayUseLogoEnabled(true)
-        supportActionBar?.setLogo(R.drawable.ic_baseline_account_circle_24)
+        supportActionBar?.setLogo(R.drawable.logo2)
 
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity() {
                     .replace(R.id.containerHistCompra, HomeFragment()).addToBackStack("fragHome").commit()
                 R.id.categoria -> supportFragmentManager.beginTransaction()
                     .replace(R.id.containerHistCompra, CategoriasFragment()).addToBackStack("fragHome").commit()
+                else -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.containerHistCompra, HomeFragment()).addToBackStack("fragHome").commit()
             }
 
             true

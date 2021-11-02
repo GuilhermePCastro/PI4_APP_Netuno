@@ -180,9 +180,11 @@ class HomeFragment : Fragment() {
                     .into(cardBinding.imgProdutoHome)
             }
 
+            var prodId = it.id
+
             cardBinding.card.setOnClickListener{
                 containerFrag?.let {
-                    parentFragmentManager.beginTransaction().replace(it.id, ProdutoDescFragment())
+                    parentFragmentManager.beginTransaction().replace(it.id,  ProdutoDescFragment.newInstance(prodId))
                         .addToBackStack("Home").commit()
                 }
             }
