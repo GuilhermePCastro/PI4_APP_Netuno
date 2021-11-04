@@ -1,80 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E4E3E3"
-    android:orientation="vertical"
     tools:context=".fragments.ListaPerfilFragment">
 
-    <TableLayout
-        android:id="@+id/tableLayout"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_baseline_storage_24"
+            android:tint="@color/secondary_color" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="248dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="64dp"
+            android:text="Meus Pedidos"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/secondary_color"
+            android:textStyle="normal" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:tint="@color/secondary_color" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
-        <TableRow
-            android:id="@+id/linha1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_baseline_person_24"
+            android:tint="@color/secondary_color" />
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="59dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_baseline_storage_24" />
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="248dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="64dp"
+            android:text="Meus Dados"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/secondary_color"
+            android:textStyle="normal" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="248dp"
-                android:layout_height="wrap_content"
-                android:text="Meus Pedidos"
-                android:textColor="@color/secondary_light"
-                android:textSize="23sp"
-                android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:tint="@color/secondary_color" />
+    </androidx.cardview.widget.CardView>
 
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
 
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/linha2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
-
-            <ImageView
-                android:id="@+id/imageView7"
-                android:layout_width="65dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_baseline_person_24" />
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Meus Dados"
-                android:textColor="@color/secondary_light"
-                android:textSize="23sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/imageView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
-        </TableRow>
-
-    </TableLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

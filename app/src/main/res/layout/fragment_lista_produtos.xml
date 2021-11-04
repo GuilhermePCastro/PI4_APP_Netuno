@@ -30,11 +30,11 @@
                     android:id="@+id/lblCatLista"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
+                    android:layout_margin="16dp"
                     android:text="Categoria"
-                    android:textColor="@color/secondary_light"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textColor="@color/secondary_color"
+                    android:textStyle="normal" />
 
                 <LinearLayout
                     android:id="@+id/containerListProd"
