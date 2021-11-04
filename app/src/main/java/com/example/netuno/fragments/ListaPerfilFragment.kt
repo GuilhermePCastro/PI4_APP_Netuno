@@ -19,13 +19,13 @@ class ListaPerfilFragment : Fragment() {
 
         binding = FragmentListaPerfilBinding.inflate(inflater)
 
-        binding.linha1.setOnClickListener {
+        binding.cardPedidos.setOnClickListener {
             container?.let{
                 parentFragmentManager.beginTransaction().replace(it.id, HistoricoCompraFragment()).addToBackStack("listaPerfil").commit()
             }
         }
 
-        binding.linha2.setOnClickListener {
+        binding.cardDados.setOnClickListener {
             container?.let{
                 val i = Intent(container.context, Profile::class.java)
                 startActivity(i)

@@ -34,7 +34,8 @@
                     android:text="Categoria"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     android:textColor="@color/secondary_color"
-                    android:textStyle="normal" />
+                    android:textSize="30sp"
+                    android:textStyle="normal|bold" />
 
                 <LinearLayout
                     android:id="@+id/containerListProd"
