@@ -7,6 +7,12 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import com.google.gson.GsonBuilder
+
+import com.google.gson.Gson
+
+
+
 
 class API(val context: Context){
 
@@ -15,8 +21,6 @@ class API(val context: Context){
 
     private val retrofit: Retrofit
         get(){
-
-            //.authenticator(TokenAuthenticator(context))
 
             val okHttp = OkHttpClient.Builder()
                 .readTimeout(timeout, TimeUnit.SECONDS)
@@ -48,5 +52,10 @@ class API(val context: Context){
     val marca: MarcaAPI
         get(){
             return retrofit.create(MarcaAPI::class.java)
+        }
+
+    val user: UserAPI
+        get(){
+            return retrofit.create(UserAPI::class.java)
         }
 }

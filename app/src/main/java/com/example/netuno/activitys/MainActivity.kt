@@ -1,5 +1,6 @@
 package com.example.netuno.activitys
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -7,6 +8,7 @@ import android.view.MenuItem
 import com.example.netuno.R
 import com.example.netuno.databinding.ActivityMainBinding
 import com.example.netuno.fragments.*
+import com.example.netuno.ui.login.LoginActivity
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -21,10 +23,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //supportFragmentManager.beginTransaction()
+        //                        .replace(R.id.containerHistCompra, ListaPerfilFragment()).addToBackStack("fragHome").commit()
+
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId) {
-                R.id.perfil -> supportFragmentManager.beginTransaction()
-                    .replace(R.id.containerHistCompra, ListaPerfilFragment()).addToBackStack("fragHome").commit()
+                R.id.perfil -> {
+                    startActivity(Intent(this, LoginActivity::class.java))
+                }
                 R.id.home -> supportFragmentManager.beginTransaction()
                     .replace(R.id.containerHistCompra, HomeFragment()).addToBackStack("fragHome").commit()
                 R.id.categoria -> supportFragmentManager.beginTransaction()

@@ -12,14 +12,16 @@ interface UserAPI {
     @GET("/api/user/index")
     fun index(): Call<List<User>>
 
+    @Headers("Content-Type: application/json")
     @GET("/api/user")
-    fun show(): Call<User>
+    fun show(@Header("Authorization") token: String): Call<User>
 
     @GET("/api/user/{id}")
     fun showUnique(@Path("id") id: Int): Call<User>
 
+    @Headers("Content-Type: application/json")
     @POST("/api/login")
-    fun login(@Body user: User): Call<String>
+    fun login(@Body user: User): Call<User>
 
     @POST("/api/user")
     fun store(@Body user: User): Call<User>

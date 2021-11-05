@@ -1,6 +1,7 @@
 package com.example.netuno.ui.login
 
 import android.app.Activity
+import android.content.Context
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,13 +9,21 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import com.example.netuno.API.API
 import com.example.netuno.databinding.ActivityLoginBinding
 
 import com.example.netuno.R
+import com.example.netuno.model.Produto
+import com.example.netuno.model.User
+import com.google.android.material.snackbar.Snackbar
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
@@ -92,16 +101,49 @@ class LoginActivity : AppCompatActivity() {
             }
 
             login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
+
+                val callback = object : Callback<User> {
+                    override fun onResponse(call: Call<User>, response: Response<User>) {
+                        if(response.isSuccessful){
+
+                            val token = response.body()
+
+                            if (token != null) {
+
+                                val p = getSharedPreferences("auth", Context.MODE_PRIVATE)
+                                val editP = p.edit()
+                                editP.putString("token", token.token)
+                                editP.commit()
+                                pegaUsuario(token.token)
+                            }
+
+                        }else{
+                            Snackbar.make(it,"Erro de credênciais!",
+                                Snackbar.LENGTH_LONG).show()
+
+                            Log.e("ERROR", response.errorBody().toString())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<User>, t: Throwable) {
+                        Snackbar.make(it,"Não é possível se conectar ao servidor",
+                            Snackbar.LENGTH_LONG).show()
+
+                        Log.e("ERROR", "Falha ao executar serviço", t)
+
+                    }
+
+                }
+                var user = User("","","",0, 0, "admin@gmail.com","Android", "123456789","")
+                API(this@LoginActivity).user.login(user).enqueue(callback)
             }
         }
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
+        val welcome = "Olá"
         val displayName = model.displayName
-        // TODO : initiate successful logged in experience
+
         Toast.makeText(
             applicationContext,
             "$welcome $displayName",
@@ -112,11 +154,44 @@ class LoginActivity : AppCompatActivity() {
     private fun showLoginFailed(@StringRes errorString: Int) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
+
+    fun pegaUsuario(token: String){
+
+        val callback = object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                if(response.isSuccessful){
+
+                    val user = response.body()
+
+                    if (user != null) {
+                        Snackbar.make(binding.login,"Olá ${user.name}",
+                            Snackbar.LENGTH_LONG).show()
+                    }
+
+                }else{
+                    Snackbar.make(binding.login,"Erro ao buscar informações do usuário",
+                        Snackbar.LENGTH_LONG).show()
+
+                    Log.e("ERROR", response.errorBody().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                Snackbar.make(binding.login,"Não é possível se conectar ao servidor",
+                    Snackbar.LENGTH_LONG).show()
+
+                Log.e("ERROR", "Falha ao executar serviço", t)
+
+            }
+
+        }
+        API(this).user.show(token).enqueue(callback)
+    }
+
 }
 
-/**
- * Extension function to simplify setting an afterTextChanged action to EditText components.
- */
+
+
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(editable: Editable?) {

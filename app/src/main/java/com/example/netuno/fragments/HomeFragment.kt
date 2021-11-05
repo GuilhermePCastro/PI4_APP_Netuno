@@ -15,6 +15,7 @@ import com.example.netuno.databinding.ActivityMainBinding
 import com.example.netuno.databinding.FragmentHomeBinding
 import com.example.netuno.databinding.ProdutoCardBinding
 import com.example.netuno.model.Produto
+import com.example.netuno.model.User
 import com.example.netuno.ui.formataNumero
 import com.example.netuno.ui.montaShimmerPicaso
 import com.facebook.shimmer.Shimmer
@@ -50,6 +51,7 @@ class HomeFragment : Fragment() {
 
         atualizarDestaques()
         atualizarLancamentos()
+
 
         return binding.root
     }

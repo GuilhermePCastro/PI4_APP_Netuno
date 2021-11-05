@@ -6,6 +6,8 @@ data class User(
 	val createdAt: String,
 	val emailVerifiedAt: Any,
 	val id: Int,
-	val email: String,
-	val device: String
+	var email: String,
+	var device: String,
+	var password: String,
+	var token: String
 )
