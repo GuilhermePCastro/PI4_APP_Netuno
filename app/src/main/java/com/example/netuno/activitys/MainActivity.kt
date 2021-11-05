@@ -9,6 +9,7 @@ import com.example.netuno.R
 import com.example.netuno.databinding.ActivityMainBinding
 import com.example.netuno.fragments.*
 import com.example.netuno.ui.login.LoginActivity
+import com.example.netuno.ui.retornaToken
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -29,7 +30,14 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.perfil -> {
-                    startActivity(Intent(this, LoginActivity::class.java))
+
+                    var token = retornaToken(this)
+                    if(token != ""){
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.containerHistCompra, ListaPerfilFragment()).addToBackStack("fragHome").commit()
+                    }else{
+                        startActivity(Intent(this, LoginActivity::class.java))
+                    }
                 }
                 R.id.home -> supportFragmentManager.beginTransaction()
                     .replace(R.id.containerHistCompra, HomeFragment()).addToBackStack("fragHome").commit()

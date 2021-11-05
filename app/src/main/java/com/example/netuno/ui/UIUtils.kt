@@ -51,3 +51,12 @@ fun formataNumero(n: Double, formato: String): String {
 
     return retorno
 }
+
+fun retornaToken(ctx: Context): String? {
+
+    val p = ctx.getSharedPreferences("auth", Context.MODE_PRIVATE)
+    val token = p.getString("token", "")
+
+    return token
+
+}

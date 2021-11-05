@@ -3,6 +3,7 @@ package com.example.netuno.API
 import android.content.Context
 import android.nfc.Tag
 import com.example.netuno.model.Marca
+import com.example.netuno.ui.retornaToken
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -10,8 +11,7 @@ import java.util.concurrent.TimeUnit
 import com.google.gson.GsonBuilder
 
 import com.google.gson.Gson
-
-
+import okhttp3.Request
 
 
 class API(val context: Context){
@@ -22,9 +22,20 @@ class API(val context: Context){
     private val retrofit: Retrofit
         get(){
 
+            var token = retornaToken(context)
+
             val okHttp = OkHttpClient.Builder()
                 .readTimeout(timeout, TimeUnit.SECONDS)
                 .connectTimeout(timeout, TimeUnit.SECONDS)
+                .addInterceptor { chain ->
+                    val newRequest: Request = chain.request().newBuilder()
+                        .addHeader(
+                            "Authorization",
+                            "Bearer ${token}"
+                        )
+                        .build()
+                    chain.proceed(newRequest)
+                }
                 .build()
 
             return Retrofit.Builder()

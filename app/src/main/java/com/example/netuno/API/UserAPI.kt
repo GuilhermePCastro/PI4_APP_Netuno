@@ -14,7 +14,7 @@ interface UserAPI {
 
     @Headers("Content-Type: application/json")
     @GET("/api/user")
-    fun show(@Header("Authorization") token: String): Call<User>
+    fun show(): Call<User>
 
     @GET("/api/user/{id}")
     fun showUnique(@Path("id") id: Int): Call<User>

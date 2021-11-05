@@ -2,6 +2,7 @@ package com.example.netuno.ui.login
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -18,6 +19,8 @@ import com.example.netuno.API.API
 import com.example.netuno.databinding.ActivityLoginBinding
 
 import com.example.netuno.R
+import com.example.netuno.activitys.MainActivity
+import com.example.netuno.fragments.HomeFragment
 import com.example.netuno.model.Produto
 import com.example.netuno.model.User
 import com.google.android.material.snackbar.Snackbar
@@ -104,6 +107,7 @@ class LoginActivity : AppCompatActivity() {
 
                 val callback = object : Callback<User> {
                     override fun onResponse(call: Call<User>, response: Response<User>) {
+                        carregaOff()
                         if(response.isSuccessful){
 
                             val token = response.body()
@@ -126,6 +130,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<User>, t: Throwable) {
+                        carregaOff()
                         Snackbar.make(it,"Não é possível se conectar ao servidor",
                             Snackbar.LENGTH_LONG).show()
 
@@ -136,12 +141,13 @@ class LoginActivity : AppCompatActivity() {
                 }
                 var user = User("","","",0, 0, "admin@gmail.com","Android", "123456789","")
                 API(this@LoginActivity).user.login(user).enqueue(callback)
+                carregaOn()
             }
         }
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = "Olá"
+        val welcome = "Bem vindo"
         val displayName = model.displayName
 
         Toast.makeText(
@@ -159,13 +165,13 @@ class LoginActivity : AppCompatActivity() {
 
         val callback = object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
+                carregaOff()
                 if(response.isSuccessful){
 
                     val user = response.body()
 
                     if (user != null) {
-                        Snackbar.make(binding.login,"Olá ${user.name}",
-                            Snackbar.LENGTH_LONG).show()
+                        loginViewModel.login(user.name, "")
                     }
 
                 }else{
@@ -177,6 +183,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
+                carregaOff()
                 Snackbar.make(binding.login,"Não é possível se conectar ao servidor",
                     Snackbar.LENGTH_LONG).show()
 
@@ -185,7 +192,16 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
-        API(this).user.show(token).enqueue(callback)
+        API(this).user.show().enqueue(callback)
+        carregaOn()
+    }
+
+    fun carregaOn(){
+        binding.loading.visibility = View.VISIBLE
+    }
+
+    fun carregaOff(){
+        binding.loading.visibility = View.GONE
     }
 
 }
