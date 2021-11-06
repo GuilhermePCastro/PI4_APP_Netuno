@@ -16,6 +16,7 @@ import com.example.netuno.model.Produto
 import com.example.netuno.ui.formataNumero
 import com.example.netuno.ui.login.LoginActivity
 import com.example.netuno.ui.montaShimmerPicaso
+import com.example.netuno.ui.msg
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import retrofit2.Call
@@ -75,18 +76,14 @@ class ProdutoDescFragment : Fragment() {
                     }
 
                 }else{
-                    Snackbar.make(binding.scrollProdDesc,"Não é possível atualizar o produto",
-                        Snackbar.LENGTH_LONG).show()
-
+                    msg(binding.scrollProdDesc,"Não é possível carregar os dados do produto")
                     Log.e("ERROR", response.errorBody().toString())
                 }
             }
 
             override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
                 CarregaOff()
-                Snackbar.make(binding.scrollProdDesc,"Não é possível se conectar ao servidor",
-                    Snackbar.LENGTH_LONG).show()
-
+                msg(binding.scrollProdDesc,"Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }
@@ -161,8 +158,7 @@ class ProdutoDescFragment : Fragment() {
                     val carrinho = response.body()
 
                     if (carrinho != null) {
-                        Snackbar.make(binding.scrollProdDesc,"Produto adicionado!",
-                            Snackbar.LENGTH_LONG).show()
+                        msg(binding.scrollProdDesc,"Produto adicionado!")
                     }
 
                 }else{
@@ -170,8 +166,7 @@ class ProdutoDescFragment : Fragment() {
                     if(response.code() == 401){
                         chamaLogin()
                     }else{
-                        Snackbar.make(binding.scrollProdDesc,"Não é possível atualizar o carrinho",
-                            Snackbar.LENGTH_LONG).show()
+                        msg(binding.scrollProdDesc,"Não é possível atualizar o carrinho")
                     }
 
                     Log.e("ERROR", response.code().toString())
@@ -179,9 +174,7 @@ class ProdutoDescFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<CarrinhoItem>, t: Throwable) {
-                Snackbar.make(binding.scrollProdDesc,"Não é possível se conectar ao servidor",
-                    Snackbar.LENGTH_LONG).show()
-
+                msg(binding.scrollProdDesc,"Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }

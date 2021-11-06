@@ -18,6 +18,7 @@ import com.example.netuno.model.Produto
 import com.example.netuno.model.User
 import com.example.netuno.ui.formataNumero
 import com.example.netuno.ui.montaShimmerPicaso
+import com.example.netuno.ui.msg
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.google.android.material.snackbar.Snackbar
@@ -72,18 +73,14 @@ class HomeFragment : Fragment() {
                     val produtos = response.body()
                     atualizarUIDestaques(produtos)
                 }else{
-                    Snackbar.make(binding.conDestaques,"Não é possível atualizar os destaques",
-                        Snackbar.LENGTH_LONG).show()
-
+                    msg(binding.conDestaques,"Não é possível atualizar os destaques")
                     Log.e("ERROR", response.errorBody().toString())
                 }
             }
 
             override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
                 CarregaOff()
-                Snackbar.make(binding.conDestaques,"Não é possível se conectar ao servidor",
-                    Snackbar.LENGTH_LONG).show()
-
+                msg(binding.conDestaques,"Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }
@@ -139,18 +136,14 @@ class HomeFragment : Fragment() {
                     val produtos = response.body()
                     atualizarUILancamentos(produtos)
                 }else{
-                    Snackbar.make(binding.conLancamentos,"Não é possível atualizar os lançamentos",
-                        Snackbar.LENGTH_LONG).show()
-
+                    msg(binding.conLancamentos,"Não é possível atualizar os lançamentos")
                     Log.e("ERROR", response.errorBody().toString())
                 }
             }
 
             override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
                 CarregaOff()
-                Snackbar.make(binding.conLancamentos,"Não é possível se conectar ao servidor",
-                    Snackbar.LENGTH_LONG).show()
-
+                msg(binding.conLancamentos,"Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }

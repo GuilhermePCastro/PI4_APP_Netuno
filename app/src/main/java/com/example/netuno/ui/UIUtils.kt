@@ -2,10 +2,15 @@ package com.example.netuno.ui
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.view.View
+import androidx.core.content.ContextCompat.startActivity
+import com.example.netuno.activitys.MainActivity
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
+import com.google.android.material.snackbar.Snackbar
 
 fun alert (titulo: String, msg: String, ctx: Context){
 
@@ -82,11 +87,25 @@ fun retornaUserId(ctx: Context): Int? {
 
 }
 
-fun retornaClienteId(ctx: Context): Int? {
+fun retornaClienteId(ctx: Context): Int {
 
     val p = ctx.getSharedPreferences("auth", Context.MODE_PRIVATE)
     val id = p.getInt("cliente_id", 0)
 
     return id
+
+}
+
+fun msg(view: View, msg: String){
+
+    Snackbar.make(view,msg,Snackbar.LENGTH_LONG).show()
+}
+
+fun alertFun (titulo: String, msg: String, ctx: Context): AlertDialog.Builder? {
+
+    return AlertDialog.Builder(ctx)
+        .setTitle(titulo)
+        .setMessage(msg)
+        .setPositiveButton("OK",null)
 
 }

@@ -84,4 +84,9 @@ class API(val context: Context){
         get(){
             return retrofit.create(CarrinhoAPI::class.java)
         }
+
+    val endereco: EnderecoAPI
+        get(){
+            return retrofit.create(EnderecoAPI::class.java)
+        }
 }

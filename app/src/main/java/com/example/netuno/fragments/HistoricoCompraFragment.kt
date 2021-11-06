@@ -72,8 +72,7 @@ class HistoricoCompraFragment : Fragment() {
                     if(response.code() == 401){
                         chamaLogin()
                     }else{
-                        Snackbar.make(binding.containerHistCompra,"Não é possível atualizar os pedidos",
-                            Snackbar.LENGTH_LONG).show()
+                        msg(binding.containerHistCompra,"Não é possível atualizar os pedidos")
                     }
 
                     Log.e("ERROR", response.code().toString())
@@ -82,9 +81,7 @@ class HistoricoCompraFragment : Fragment() {
 
             override fun onFailure(call: Call<List<Pedido>>, t: Throwable) {
                 CarregaOff()
-                Snackbar.make(binding.containerHistCompra,"Não é possível se conectar ao servidor",
-                    Snackbar.LENGTH_LONG).show()
-
+                msg(binding.containerHistCompra,"Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }

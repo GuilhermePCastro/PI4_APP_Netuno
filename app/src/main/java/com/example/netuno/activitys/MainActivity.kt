@@ -24,9 +24,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //supportFragmentManager.beginTransaction()
-        //                        .replace(R.id.containerHistCompra, ListaPerfilFragment()).addToBackStack("fragHome").commit()
-
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.perfil -> {

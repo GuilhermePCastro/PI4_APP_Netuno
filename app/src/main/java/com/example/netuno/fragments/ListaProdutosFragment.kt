@@ -19,6 +19,7 @@ import com.example.netuno.model.Categoria
 import com.example.netuno.model.Produto
 import com.example.netuno.ui.formataNumero
 import com.example.netuno.ui.montaShimmerPicaso
+import com.example.netuno.ui.msg
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.google.android.material.snackbar.Snackbar
@@ -82,20 +83,15 @@ class ListaProdutosFragment : Fragment() {
                     val produtos = response.body()
                     atualizarUI(produtos)
                 }else{
-                    Snackbar.make(binding.containerListProd,"Não é possível atualizar os produtos",
-                        Snackbar.LENGTH_LONG).show()
-
+                    msg(binding.containerListProd,"Não é possível atualizar os produtos")
                     Log.e("ERROR", response.errorBody().toString())
                 }
             }
 
             override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
                 CarregaOff()
-                Snackbar.make(binding.containerListProd,"Não é possível se conectar ao servidor",
-                    Snackbar.LENGTH_LONG).show()
-
+                msg(binding.containerListProd,"Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
-
             }
 
         }

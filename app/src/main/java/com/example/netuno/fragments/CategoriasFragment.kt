@@ -16,6 +16,7 @@ import com.example.netuno.databinding.FragmentHomeBinding
 import com.example.netuno.databinding.ProdutoCardBinding
 import com.example.netuno.model.Categoria
 import com.example.netuno.model.Produto
+import com.example.netuno.ui.msg
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.google.android.material.snackbar.Snackbar
@@ -67,18 +68,14 @@ class CategoriasFragment : Fragment() {
                     val categorias = response.body()
                     atualizarUI(categorias)
                 }else{
-                    Snackbar.make(binding.containerCategorias,"Não é possível atualizar as categorias",
-                        Snackbar.LENGTH_LONG).show()
-
+                    msg(binding.containerCategorias,"Não é possível atualizar as categorias")
                     Log.e("ERROR", response.errorBody().toString())
                 }
             }
 
             override fun onFailure(call: Call<List<Categoria>>, t: Throwable) {
                 CarregaOff()
-                Snackbar.make(binding.containerCategorias,"Não é possível se conectar ao servidor",
-                    Snackbar.LENGTH_LONG).show()
-
+                msg(binding.containerCategorias,"Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }

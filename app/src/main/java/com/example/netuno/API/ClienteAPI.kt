@@ -10,10 +10,10 @@ interface ClienteAPI {
     fun index(): Call<List<Cliente>>
 
     @GET("/api/cliente/{id}")
-    fun show(@Path("id") id: Int): Call<Cliente>
+    fun show(@Path("id") id: Int): Call<List<Cliente>>
 
     @GET("/api/cliente/{id}/enderecos")
-    fun enderecos(@Path("id") id: Int): Call<List<Endereco>>
+    fun enderecos(@Path("id") id: Int): Call<Endereco>
 
     @GET("/api/cliente/{id}/pedidos")
     fun pedidos(@Path("id") id: Int): Call<List<Pedido>>

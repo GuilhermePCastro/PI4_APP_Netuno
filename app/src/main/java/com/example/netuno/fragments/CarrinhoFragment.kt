@@ -62,7 +62,7 @@ class CarrinhoFragment : Fragment() {
 
         val callback = object : Callback<Carrinho> {
             override fun onResponse(call: Call<Carrinho>, response: Response<Carrinho>) {
-                CarregaOff()
+
                 if(response.isSuccessful){
 
                     val carrinho = response.body()
@@ -78,8 +78,7 @@ class CarrinhoFragment : Fragment() {
                     if(response.code() == 401){
                         chamaLogin()
                     }else{
-                        Snackbar.make(binding.containerCarrinho,"Não é possível atualizar o carrinho",
-                            Snackbar.LENGTH_LONG).show()
+                        msg(binding.containerCarrinho,"Não é possível atualizar o carrinho")
                     }
 
                     Log.e("ERROR", response.code().toString())
@@ -87,10 +86,7 @@ class CarrinhoFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<Carrinho>, t: Throwable) {
-                CarregaOff()
-                Snackbar.make(binding.containerCarrinho,"Não é possível se conectar ao servidor",
-                    Snackbar.LENGTH_LONG).show()
-
+                msg(binding.containerCarrinho,"Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }
@@ -147,9 +143,6 @@ class CarrinhoFragment : Fragment() {
 
         }
 
-
-
-
     }
 
     fun chamaLogin() {
@@ -195,21 +188,19 @@ class CarrinhoFragment : Fragment() {
 
 
                         }
+
                     }
 
                 }else{
-                    Snackbar.make(binding.scrollView,"Não é possível atualizar o produto",
-                        Snackbar.LENGTH_LONG).show()
-
+                    msg(binding.containerCarrinho,"Não é possível atualizar o produto")
                     Log.e("ERROR", response.errorBody().toString())
                 }
+
             }
 
             override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
                 CarregaOff()
-                Snackbar.make(binding.scrollView,"Não é possível se conectar ao servidor",
-                    Snackbar.LENGTH_LONG).show()
-
+                msg(binding.containerCarrinho,"Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }
@@ -237,8 +228,7 @@ class CarrinhoFragment : Fragment() {
                     if(response.code() == 401){
                         chamaLogin()
                     }else{
-                        Snackbar.make(binding.containerCarrinho,"Não é possível atualizar o carrinho",
-                            Snackbar.LENGTH_LONG).show()
+                        msg(binding.containerCarrinho,"Não é possível atualizar o carrinho")
                     }
 
                     Log.e("ERROR", response.code().toString())
@@ -247,9 +237,7 @@ class CarrinhoFragment : Fragment() {
 
             override fun onFailure(call: Call<CarrinhoItem>, t: Throwable) {
                 CarregaOff()
-                Snackbar.make(binding.containerCarrinho,"Não é possível se conectar ao servidor",
-                    Snackbar.LENGTH_LONG).show()
-
+                msg(binding.containerCarrinho,"Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }
@@ -276,8 +264,7 @@ class CarrinhoFragment : Fragment() {
                     if(response.code() == 401){
                         chamaLogin()
                     }else{
-                        Snackbar.make(binding.containerCarrinho,"Não é possível atualizar o carrinho",
-                            Snackbar.LENGTH_LONG).show()
+                        msg(binding.containerCarrinho,"Não é possível atualizar o carrinho")
                     }
 
                     Log.e("ERROR", response.code().toString())
@@ -285,9 +272,7 @@ class CarrinhoFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<CarrinhoItem>, t: Throwable) {
-                Snackbar.make(binding.containerCarrinho,"Não é possível se conectar ao servidor",
-                    Snackbar.LENGTH_LONG).show()
-
+                msg(binding.containerCarrinho,"Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }
@@ -314,8 +299,7 @@ class CarrinhoFragment : Fragment() {
                     if(response.code() == 401){
                         chamaLogin()
                     }else{
-                        Snackbar.make(binding.containerCarrinho,"Não é possível atualizar o carrinho",
-                            Snackbar.LENGTH_LONG).show()
+                        msg(binding.containerCarrinho,"Não é possível atualizar o carrinho")
                     }
 
                     Log.e("ERROR", response.code().toString())
@@ -323,9 +307,7 @@ class CarrinhoFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<CarrinhoItem>, t: Throwable) {
-                Snackbar.make(binding.containerCarrinho,"Não é possível se conectar ao servidor",
-                    Snackbar.LENGTH_LONG).show()
-
+                msg(binding.containerCarrinho,"Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }

@@ -8,5 +8,6 @@ data class Cliente(
 	val ds_celular: String,
 	val id: Int,
 	val ds_cpf: String,
-	val ds_email: String
+	val ds_email: String,
+	val password: String
 )
