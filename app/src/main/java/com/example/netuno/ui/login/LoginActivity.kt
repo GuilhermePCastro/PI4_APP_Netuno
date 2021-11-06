@@ -21,6 +21,7 @@ import com.example.netuno.databinding.ActivityLoginBinding
 import com.example.netuno.R
 import com.example.netuno.activitys.MainActivity
 import com.example.netuno.fragments.HomeFragment
+import com.example.netuno.model.Cliente
 import com.example.netuno.model.Produto
 import com.example.netuno.model.User
 import com.google.android.material.snackbar.Snackbar
@@ -113,7 +114,6 @@ class LoginActivity : AppCompatActivity() {
                             val token = response.body()
 
                             if (token != null) {
-
                                 val p = getSharedPreferences("auth", Context.MODE_PRIVATE)
                                 val editP = p.edit()
                                 editP.putString("token", token.token)
@@ -139,7 +139,10 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                 }
-                var user = User("","","",0, 0, "admin@gmail.com","Android", "123456789","")
+                var login = binding.username.text.toString()
+                var senha = binding.password.text.toString()
+
+                var user = User("","","",0, 0, login,"Android", senha,"")
                 API(this@LoginActivity).user.login(user).enqueue(callback)
                 carregaOn()
             }
@@ -171,7 +174,7 @@ class LoginActivity : AppCompatActivity() {
                     val user = response.body()
 
                     if (user != null) {
-                        loginViewModel.login(user.name, "")
+                        pegaCliente(user.id)
                     }
 
                 }else{
@@ -202,6 +205,46 @@ class LoginActivity : AppCompatActivity() {
 
     fun carregaOff(){
         binding.loading.visibility = View.GONE
+    }
+
+    fun pegaCliente(user: Int){
+
+        val callback = object : Callback<Cliente> {
+            override fun onResponse(call: Call<Cliente>, response: Response<Cliente>) {
+                carregaOff()
+                if(response.isSuccessful){
+
+                    val cliente = response.body()
+
+                    if (cliente != null) {
+                        val p = getSharedPreferences("auth", Context.MODE_PRIVATE)
+                        val editP = p.edit()
+                        editP.putInt("cliente_id", cliente.id)
+                        editP.putInt("user_id", cliente.user_id)
+                        editP.commit()
+                        loginViewModel.login(cliente.ds_nome, "")
+                    }
+
+                }else{
+                    Snackbar.make(binding.login,"Erro ao buscar informações do usuário",
+                        Snackbar.LENGTH_LONG).show()
+
+                    Log.e("ERROR", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<Cliente>, t: Throwable) {
+                carregaOff()
+                Snackbar.make(binding.login,"Não é possível se conectar ao servidor",
+                    Snackbar.LENGTH_LONG).show()
+
+                Log.e("ERROR", "Falha ao executar serviço", t)
+
+            }
+
+        }
+        API(this).user.cliente(user).enqueue(callback)
+        carregaOn()
     }
 
 }

@@ -32,4 +32,7 @@ interface UserAPI {
     @DELETE("/api/user/{id}")
     fun delete(@Path("id") id: Int): Call<User>
 
+    @GET("/api/user/{id}/cliente")
+    fun cliente(@Path("id") id: Int): Call<Cliente>
+
 }

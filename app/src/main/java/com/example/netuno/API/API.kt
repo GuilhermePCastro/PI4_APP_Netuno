@@ -69,4 +69,19 @@ class API(val context: Context){
         get(){
             return retrofit.create(UserAPI::class.java)
         }
+
+    val pedido: PedidoAPI
+        get(){
+            return retrofit.create(PedidoAPI::class.java)
+        }
+
+    val cliente: ClienteAPI
+        get(){
+            return retrofit.create(ClienteAPI::class.java)
+        }
+
+    val carrinho: CarrinhoAPI
+        get(){
+            return retrofit.create(CarrinhoAPI::class.java)
+        }
 }

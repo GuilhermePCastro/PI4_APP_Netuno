@@ -30,14 +30,7 @@ class ListaPerfilFragment : Fragment() {
             containerFrag = container
         }
 
-        // Se não tiver logado, vai para o login
-        var token = retornaToken(ctx)
-        if(token == ""){
-            container?.let{
-                val i = Intent(container.context, LoginActivity::class.java)
-                startActivity(i)
-            }
-        }
+        verificaLogin()
 
         binding.cardPedidos.setOnClickListener {
             container?.let{
@@ -57,6 +50,8 @@ class ListaPerfilFragment : Fragment() {
             val p = ctx.getSharedPreferences("auth", Context.MODE_PRIVATE)
             val editP = p.edit()
             editP.putString("token", "")
+            editP.putInt("cliente_id", 0)
+            editP.putInt("user_id", 0)
             editP.commit()
 
             container?.let{
@@ -67,6 +62,23 @@ class ListaPerfilFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onResume(){
+        super.onResume()
+
+        verificaLogin()
+    }
+
+    fun verificaLogin(){
+        // Se não tiver logado, vai para o login
+        var token = retornaToken(ctx)
+        if(token == ""){
+            containerFrag?.let{
+                val i = Intent(containerFrag.context, LoginActivity::class.java)
+                startActivity(i)
+            }
+        }
     }
 
 

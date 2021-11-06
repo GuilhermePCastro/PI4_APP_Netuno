@@ -52,11 +52,41 @@ fun formataNumero(n: Double, formato: String): String {
     return retorno
 }
 
+fun formataData(d: String): String {
+
+    var retorno: String
+    var dia = d.substring(8,10)
+    var mes = d.substring(5,7)
+    var ano = d.substring(0,4)
+
+    retorno = "${dia}/${mes}/${ano}"
+
+    return retorno
+}
+
 fun retornaToken(ctx: Context): String? {
 
     val p = ctx.getSharedPreferences("auth", Context.MODE_PRIVATE)
     val token = p.getString("token", "")
 
     return token
+
+}
+
+fun retornaUserId(ctx: Context): Int? {
+
+    val p = ctx.getSharedPreferences("auth", Context.MODE_PRIVATE)
+    val id = p.getInt("user_id", 0)
+
+    return id
+
+}
+
+fun retornaClienteId(ctx: Context): Int? {
+
+    val p = ctx.getSharedPreferences("auth", Context.MODE_PRIVATE)
+    val id = p.getInt("cliente_id", 0)
+
+    return id
 
 }

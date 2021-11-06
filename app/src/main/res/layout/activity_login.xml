@@ -76,7 +76,7 @@
         android:layout_gravity="start"
         android:layout_marginTop="32dp"
         android:enabled="true"
-        android:text="Entrar ou criar conta"
+        android:text="Acessar conta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />

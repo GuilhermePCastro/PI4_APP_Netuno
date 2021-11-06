@@ -4,7 +4,7 @@ data class Pedido(
 	val ds_status: String,
 	val vl_total: Double,
 	val ds_numero: String,
-	val createdAt: String,
+	val created_at: String,
 	val ds_cidade: String,
 	val updatedAt: String,
 	val ds_uf: String,
