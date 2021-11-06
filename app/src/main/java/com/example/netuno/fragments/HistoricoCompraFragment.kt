@@ -39,6 +39,8 @@ class HistoricoCompraFragment : Fragment() {
             containerFrag = container
         }
 
+        verificaLogin()
+
         binding.swipperHistCom.setOnRefreshListener {
             atualizarPedidos()
         }
@@ -132,6 +134,14 @@ class HistoricoCompraFragment : Fragment() {
         containerFrag?.let {
             val i = Intent(containerFrag.context, LoginActivity::class.java)
             startActivity(i)
+        }
+    }
+
+    fun verificaLogin(){
+        // Se não tiver logado, vai para o login
+        var token = retornaToken(ctx)
+        if(token == ""){
+            chamaLogin()
         }
     }
 }

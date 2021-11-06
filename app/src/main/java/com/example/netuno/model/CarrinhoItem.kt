@@ -1,10 +1,10 @@
 package com.example.netuno.model
 
 data class CarrinhoItem(
-	val updatedAt: String,
+	val updated_at: String,
 	val qt_produto: Int,
-	val createdAt: String,
+	val created_at: String,
 	val id: Int,
-	val produtoId: Int,
-	val clienteId: Int
+	val produto_id: Int,
+	val cliente_id: Int
 )
