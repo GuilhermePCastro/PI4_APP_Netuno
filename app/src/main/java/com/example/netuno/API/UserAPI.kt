@@ -23,6 +23,7 @@ interface UserAPI {
     @POST("/api/login")
     fun login(@Body user: User): Call<User>
 
+    @Headers("Content-Type: application/json")
     @POST("/api/user")
     fun store(@Body user: User): Call<User>
 

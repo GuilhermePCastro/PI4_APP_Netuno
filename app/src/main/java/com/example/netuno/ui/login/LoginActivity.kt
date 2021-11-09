@@ -16,6 +16,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import com.example.netuno.API.API
+import com.example.netuno.Profile
 import com.example.netuno.databinding.ActivityLoginBinding
 
 import com.example.netuno.R
@@ -104,6 +105,11 @@ class LoginActivity : AppCompatActivity() {
                 false
             }
 
+            binding.btnCriarConta?.setOnClickListener {
+                val i = Intent(this@LoginActivity, Profile::class.java)
+                startActivity(i)
+            }
+
             login.setOnClickListener {
 
                 val callback = object : Callback<User> {
@@ -142,7 +148,7 @@ class LoginActivity : AppCompatActivity() {
                 var login = binding.username.text.toString()
                 var senha = binding.password.text.toString()
 
-                var user = User("","","",0, 0, login,"Android", senha,"")
+                var user = User(login,"","","", 0,"","Android", senha,"")
                 API(this@LoginActivity).user.login(user).enqueue(callback)
                 carregaOn()
             }

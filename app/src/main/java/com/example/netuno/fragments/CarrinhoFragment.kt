@@ -55,6 +55,7 @@ class CarrinhoFragment : Fragment() {
     override fun onResume(){
         super.onResume()
 
+        verificaLogin()
         atualizaCarrinho()
     }
 
@@ -109,6 +110,7 @@ class CarrinhoFragment : Fragment() {
         if (carrinho != null) {
             if(carrinho.isEmpty()){
                 binding.lblSemProd.visibility = View.VISIBLE
+                CarregaOff()
             }
         }
 

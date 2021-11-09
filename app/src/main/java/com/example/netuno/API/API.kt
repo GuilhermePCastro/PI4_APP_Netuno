@@ -24,7 +24,10 @@ class API(val context: Context){
 
             var token = retornaToken(context)
 
-            val okHttp = OkHttpClient.Builder()
+            var okHttp: OkHttpClient
+
+
+            okHttp = OkHttpClient.Builder()
                 .readTimeout(timeout, TimeUnit.SECONDS)
                 .connectTimeout(timeout, TimeUnit.SECONDS)
                 .addInterceptor { chain ->
@@ -37,6 +40,9 @@ class API(val context: Context){
                     chain.proceed(newRequest)
                 }
                 .build()
+
+
+
 
             return Retrofit.Builder()
                 .client(okHttp)

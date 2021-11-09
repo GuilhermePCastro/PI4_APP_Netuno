@@ -106,7 +106,8 @@
             android:layout_height="24dp"
             android:layout_margin="16dp"
             android:src="@drawable/ic_baseline_person_24"
-            android:tint="@color/secondary_color" />
+            android:tint="@color/secondary_color"
+            app:srcCompat="@drawable/ic_baseline_exit_to_app_24" />
 
         <TextView
             android:layout_width="248dp"

@@ -17,6 +17,7 @@ import com.example.netuno.ui.formataNumero
 import com.example.netuno.ui.login.LoginActivity
 import com.example.netuno.ui.montaShimmerPicaso
 import com.example.netuno.ui.msg
+import com.example.netuno.ui.retornaToken
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import retrofit2.Call
@@ -112,6 +113,7 @@ class ProdutoDescFragment : Fragment() {
             binding.lblMarca.text       = it.marca.ds_marca
 
             binding.btnComprar.setOnClickListener {
+                verificaLogin()
                 addProduto(prodId)
             }
 
@@ -190,6 +192,14 @@ class ProdutoDescFragment : Fragment() {
         containerPro?.let {
             val i = Intent(containerPro.context, LoginActivity::class.java)
             startActivity(i)
+        }
+    }
+
+    fun verificaLogin(){
+        // Se não tiver logado, vai para o login
+        var token = retornaToken(ctx)
+        if(token == ""){
+            chamaLogin()
         }
     }
 

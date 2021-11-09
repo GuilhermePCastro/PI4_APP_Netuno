@@ -11,6 +11,7 @@ import com.example.netuno.activitys.MainActivity
 import com.example.netuno.databinding.ActivityProfileBinding
 import com.example.netuno.model.Cliente
 import com.example.netuno.model.Endereco
+import com.example.netuno.model.User
 import com.example.netuno.ui.*
 import com.example.netuno.ui.login.LoginActivity
 import com.google.android.material.snackbar.Snackbar
@@ -34,38 +35,44 @@ class Profile : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        verificaLogin()
-
         clienteId = retornaClienteId(this)
 
         //Verificando se é uma conta nova ou alteração
-        if(clienteId != 0){
+        if (clienteId != 0) {
+            verificaLogin()
             pegaCliente()
+        } else {
+            CarregaOff()
+            atuUiNovo()
         }
 
         binding.floatingActionButton2.setOnClickListener {
 
-            if(clienteId != 0){
+            if (clienteId != 0) {
                 updateCliente()
+            } else {
+                criaUsuario()
             }
 
-
-
         }
-
 
 
     }
 
-    override fun onResume(){
+    override fun onResume() {
         super.onResume()
 
-        verificaLogin()
         clienteId = retornaClienteId(this)
+
         //Verificando se é uma conta nova ou alteração
-        if(clienteId != 0){
+        if (clienteId != 0) {
+            verificaLogin()
             pegaCliente()
+        } else {
+            CarregaOff()
+            atuUiNovo()
         }
+
 
     }
 
@@ -74,52 +81,52 @@ class Profile : AppCompatActivity() {
         startActivity(i)
     }
 
-    fun verificaLogin(){
+    fun verificaLogin() {
         // Se não tiver logado, vai para o login
         var token = retornaToken(this)
-        if(token == ""){
+        if (token == "") {
             chamaLogin()
         }
     }
 
-    fun CarregaOn(){
+    fun CarregaOn() {
         binding.rowProgress.visibility = View.VISIBLE
         binding.rowDados.visibility = View.INVISIBLE
     }
 
-    fun CarregaOff(){
+    fun CarregaOff() {
         binding.rowProgress.visibility = View.GONE
         binding.rowDados.visibility = View.VISIBLE
     }
 
-    fun pegaCliente(){
+    fun pegaCliente() {
 
         val callback = object : Callback<List<Cliente>> {
-            override fun onResponse(call:  Call<List<Cliente>>, response: Response<List<Cliente>>) {
+            override fun onResponse(call: Call<List<Cliente>>, response: Response<List<Cliente>>) {
 
-                CarregaOff()
-                if(response.isSuccessful){
+
+                if (response.isSuccessful) {
 
                     val cliente = response.body()
                     if (cliente != null) {
                         atualizarUI(cliente)
                     }
 
-                }else{
+                } else {
 
-                    if(response.code() == 401){
+                    if (response.code() == 401) {
                         chamaLogin()
-                    }else{
-                        msg(binding.usernameView,"Não é possível carregar os dados do cliente")
+                    } else {
+                        msg(binding.usernameView, "Não é possível carregar os dados do cliente")
                     }
 
                     Log.e("ERROR", response.code().toString())
                 }
             }
 
-            override fun onFailure(call:  Call<List<Cliente>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Cliente>>, t: Throwable) {
                 CarregaOff()
-                msg(binding.usernameView,"Não é possível se conectar ao servidor")
+                msg(binding.usernameView, "Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }
@@ -131,7 +138,7 @@ class Profile : AppCompatActivity() {
         }
     }
 
-    fun atualizarUI(cliente: List<Cliente>){
+    fun atualizarUI(cliente: List<Cliente>) {
 
         cliente.forEach {
             binding.usernameView.text = it.ds_nome
@@ -146,13 +153,13 @@ class Profile : AppCompatActivity() {
 
     }
 
-    fun pegaEndereco(id: Int){
+    fun pegaEndereco(id: Int) {
 
         val callback = object : Callback<Endereco> {
-            override fun onResponse(call:  Call<Endereco>, response: Response<Endereco>) {
+            override fun onResponse(call: Call<Endereco>, response: Response<Endereco>) {
 
-                //CarregaOff()
-                if(response.isSuccessful){
+                CarregaOff()
+                if (response.isSuccessful) {
 
                     val endereco = response.body()
                     if (endereco != null) {
@@ -160,21 +167,21 @@ class Profile : AppCompatActivity() {
                         enderecoId = endereco.id
                     }
 
-                }else{
+                } else {
 
-                    if(response.code() == 401){
+                    if (response.code() == 401) {
                         chamaLogin()
-                    }else{
-                        msg(binding.usernameView,"Não é possível carregar os dados do endereço")
+                    } else {
+                        msg(binding.usernameView, "Não é possível carregar os dados do endereço")
                     }
 
                     Log.e("ERROR", response.code().toString())
                 }
             }
 
-            override fun onFailure(call:  Call<Endereco>, t: Throwable) {
+            override fun onFailure(call: Call<Endereco>, t: Throwable) {
                 //CarregaOff()
-                msg(binding.usernameView,"Não é possível se conectar ao servidor")
+                msg(binding.usernameView, "Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }
@@ -183,7 +190,7 @@ class Profile : AppCompatActivity() {
         API(this).cliente.enderecos(id).enqueue(callback)
     }
 
-    fun atualizarEndereco(endereco: Endereco){
+    fun atualizarEndereco(endereco: Endereco) {
 
         binding.editTextNumberSignedCEP.setText(endereco.ds_cep)
         binding.editTextTextPostalAddress.setText(endereco.ds_endereco)
@@ -193,41 +200,42 @@ class Profile : AppCompatActivity() {
         binding.editTextAdressState.setText(endereco.ds_uf)
     }
 
-    fun updateCliente(){
+    fun updateCliente() {
 
         val callback = object : Callback<Cliente> {
-            override fun onResponse(call:  Call<Cliente>, response: Response<Cliente>) {
+            override fun onResponse(call: Call<Cliente>, response: Response<Cliente>) {
 
                 //CarregaOff()
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     updateEndereco()
-                }else{
+                } else {
 
-                    if(response.code() == 401){
+                    if (response.code() == 401) {
                         chamaLogin()
-                    }else{
-                        msg(binding.usernameView,"Não é possível atualizar os dados do cliente")
+                    } else {
+                        msg(binding.usernameView, "Não é possível atualizar os dados do cliente")
                     }
 
                     Log.e("ERROR", response.code().toString())
                 }
             }
 
-            override fun onFailure(call:  Call<Cliente>, t: Throwable) {
+            override fun onFailure(call: Call<Cliente>, t: Throwable) {
                 //CarregaOff()
-                msg(binding.usernameView,"Não é possível se conectar ao servidor")
+                msg(binding.usernameView, "Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }
 
         }
 
-        if( binding.editTextTextPassword.text.toString() == ""){
+        if (binding.editTextTextPassword.text.toString() == "") {
             msg(binding.usernameView, "Preencha a senha para continuar")
             binding.editTextTextPassword.requestFocus()
-        }else{
+        } else {
             if (clienteId != null) {
-                var cliente = Cliente(  binding.editTextTextPersonName.text.toString(),
+                var cliente = Cliente(
+                    binding.editTextTextPersonName.text.toString(),
                     "",
                     0,
                     "",
@@ -235,9 +243,10 @@ class Profile : AppCompatActivity() {
                     clienteId,
                     binding.editTextTextPersonCPF.text.toString(),
                     binding.editTextTextEmailAddress.text.toString(),
-                    binding.editTextTextPassword.text.toString())
+                    binding.editTextTextPassword.text.toString()
+                )
 
-                API(this).cliente.update(cliente ,clienteId).enqueue(callback)
+                API(this).cliente.update(cliente, clienteId).enqueue(callback)
                 //CarregaOn()
             }
         }
@@ -252,7 +261,7 @@ class Profile : AppCompatActivity() {
 
                 //CarregaOff()
                 if (response.isSuccessful) {
-                   var alert = alertFun("Dados Pessoais", "Dados atualizados com sucesso!", ctx)
+                    var alert = alertFun("Dados Pessoais", "Dados atualizados com sucesso!", ctx)
 
                     if (alert != null) {
                         alert.setOnDismissListener {
@@ -302,10 +311,179 @@ class Profile : AppCompatActivity() {
         }
     }
 
+    fun atuUiNovo() {
+        binding.usernameView.text = "Novo usuário"
+        binding.floatingActionButton2.text = "Criar conta"
+    }
 
+    fun criaUsuario() {
+
+        val callback = object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+
+                //CarregaOff()
+                if (response.isSuccessful) {
+
+                    val user = response.body()
+                    if (user != null) {
+                        criaCliente(user)
+                    }
+
+                } else {
+                    CarregaOff()
+                    if (response.code() == 401) {
+                        chamaLogin()
+                    } else {
+                        msg(binding.usernameView, "Não é possível criar o usuário")
+                    }
+
+                    Log.e("ERROR", response.code().toString())
+                    Log.e("ERROR", response.body().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                CarregaOff()
+                msg(binding.usernameView, "Não é possível se conectar ao servidor")
+                Log.e("ERROR", "Falha ao executar serviço", t)
+
+            }
+
+        }
+
+        var user = User(
+            binding.editTextTextEmailAddress.text.toString(),
+            binding.editTextTextPersonName.text.toString(),
+            "",
+            "",
+            0,
+           "",
+            "",
+            binding.editTextTextPassword.text.toString(),
+            ""
+        )
+
+        API(this).user.store(user).enqueue(callback)
+        CarregaOn()
+
+
+    }
+
+    fun criaCliente(user: User) {
+
+        val callback = object : Callback<Cliente> {
+            override fun onResponse(call: Call<Cliente>, response: Response<Cliente>) {
+
+                //CarregaOff()
+                if (response.isSuccessful) {
+
+                    val cliente = response.body()
+                    if (cliente != null) {
+                        criaEndereco(cliente)
+                    }
+
+                } else {
+                    CarregaOff()
+                    if (response.code() == 401) {
+                        chamaLogin()
+                    } else {
+                        msg(binding.usernameView, "Não é possível criar o cliente")
+                    }
+
+                    Log.e("ERROR", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<Cliente>, t: Throwable) {
+                CarregaOff()
+                msg(binding.usernameView, "Não é possível se conectar ao servidor")
+                Log.e("ERROR", "Falha ao executar serviço", t)
+
+            }
+
+        }
+
+        var cliente = Cliente(
+            binding.editTextTextPersonName.text.toString(),
+            "",
+            user.id,
+            "",
+            binding.editTextPhone.text.toString(),
+            0,
+            binding.editTextTextPersonCPF.text.toString(),
+            binding.editTextTextEmailAddress.text.toString(),
+            binding.editTextTextPassword.text.toString()
+        )
+
+        API(this).cliente.store(cliente).enqueue(callback)
+
+    }
+
+    fun criaEndereco(cliente: Cliente) {
+
+        val callback = object : Callback<Endereco> {
+            override fun onResponse(call: Call<Endereco>, response: Response<Endereco>) {
+
+                if (response.isSuccessful) {
+                    var alert = alertFun(
+                        "Cadastro efetuado!",
+                        "Faça o login para continuar a navegação :)",
+                        ctx
+                    )
+
+                    if (alert != null) {
+                        alert.setOnDismissListener {
+                            chamaLogin()
+                        }
+                        alert.create().show()
+                    }
+
+                    CarregaOff()
+
+
+                } else {
+                    CarregaOff()
+                    if (response.code() == 401) {
+                        chamaLogin()
+                    } else {
+                        msg(binding.usernameView, "Não é possível criar o endereço")
+                    }
+
+                    Log.e("ERROR", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<Endereco>, t: Throwable) {
+                CarregaOff()
+                msg(binding.usernameView, "Não é possível se conectar ao servidor")
+                Log.e("ERROR", "Falha ao executar serviço", t)
+
+            }
+
+        }
+
+
+        var endereco = Endereco(
+            "N/A",
+            "",
+            binding.editTexAddresstNumber.text.toString(),
+            binding.editTextAdressState.text.toString(),
+            "",
+            0,
+            binding.editTextNumberSignedCEP.text.toString(),
+            binding.editTextTextAddressCity.text.toString(),
+            binding.editTextAddressComplement.text.toString(),
+            cliente.id,
+            binding.editTextTextPostalAddress.text.toString()
+        )
+
+        API(this).endereco.store(endereco).enqueue(callback)
+
+    }
 
     fun chamaHome(){
         startActivity(Intent(this, MainActivity::class.java))
     }
+
 
 }

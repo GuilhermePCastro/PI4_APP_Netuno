@@ -99,6 +99,12 @@ class HistoricoCompraFragment : Fragment() {
     fun atualizarUI(lista: List<Pedido>?){
         binding.containerHistCompra.removeAllViews()
 
+        if (lista != null) {
+            if(lista.isEmpty()){
+                binding.lblSemPedido.visibility = View.VISIBLE
+            }
+        }
+
         lista?.forEach{
             val cardBinding = CardPedidoBinding.inflate(layoutInflater)
 
