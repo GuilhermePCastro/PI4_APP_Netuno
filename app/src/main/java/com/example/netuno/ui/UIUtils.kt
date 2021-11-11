@@ -59,6 +59,7 @@ fun formataNumero(n: Double, formato: String): String {
 
 fun formataData(d: String): String {
 
+    //Simple dateformat
     var retorno: String
     var dia = d.substring(8,10)
     var mes = d.substring(5,7)

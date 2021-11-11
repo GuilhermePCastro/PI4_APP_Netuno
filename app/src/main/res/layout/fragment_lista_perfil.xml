@@ -102,12 +102,11 @@
         app:layout_constraintTop_toBottomOf="@+id/cardDados">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_baseline_person_24"
-            android:tint="@color/secondary_color"
-            app:srcCompat="@drawable/ic_baseline_exit_to_app_24" />
+            android:src="@drawable/ic_baseline_exit_to_app_24" />
 
         <TextView
             android:layout_width="248dp"
@@ -126,6 +125,7 @@
             android:layout_marginRight="16dp"
             android:src="@drawable/ic_baseline_arrow_forward_ios_24"
             android:tint="@color/secondary_color" />
+
     </androidx.cardview.widget.CardView>
 
 

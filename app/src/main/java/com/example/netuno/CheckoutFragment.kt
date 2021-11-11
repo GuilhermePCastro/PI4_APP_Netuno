@@ -1,59 +1,294 @@
 package com.example.netuno
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.netuno.API.API
+import com.example.netuno.databinding.FragmentCategoriasBinding
+import com.example.netuno.databinding.FragmentCheckoutBinding
+import com.example.netuno.databinding.ProdutoCarrinhoBinding
+import com.example.netuno.databinding.ProdutoCheckoutBinding
+import com.example.netuno.fragments.CarrinhoFragment
+import com.example.netuno.fragments.ProdutoDescFragment
+import com.example.netuno.model.Carrinho
+import com.example.netuno.model.CarrinhoItem
+import com.example.netuno.model.Endereco
+import com.example.netuno.model.Produto
+import com.example.netuno.ui.*
+import com.example.netuno.ui.login.LoginActivity
+import com.squareup.picasso.Picasso
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CheckoutFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CheckoutFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    lateinit var  binding: FragmentCheckoutBinding
+    lateinit var containerFrag: ViewGroup
+    lateinit var ctx: Context
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentCheckoutBinding.inflate(inflater)
+        if (container != null) {
+            ctx = container.context
+        }
+
+        if (container != null) {
+            containerFrag = container
+        }
+
+        verificaLogin()
+        atualizaDados()
+
+        return binding.root
+    }
+
+    fun chamaLogin() {
+        containerFrag?.let{
+            val i = Intent(containerFrag.context, LoginActivity::class.java)
+            startActivity(i)
+
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_checkout, container, false)
+    fun verificaLogin() {
+        // Se não tiver logado, vai para o login
+        var token = retornaToken(ctx)
+        if (token == "") {
+            chamaLogin()
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CheckoutFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CheckoutFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    fun atualizaDados(){
+        carregaOn()
+        atualizaValores()
+        atualizaEnd()
+
+    }
+
+    fun atualizaEnd(){
+        val callback = object : Callback<Endereco> {
+            override fun onResponse(call: Call<Endereco>, response: Response<Endereco>) {
+
+                if (response.isSuccessful) {
+
+                    val endereco = response.body()
+                    if (endereco != null) {
+                        binding.edtCEP.setText(endereco.ds_cep)
+                        binding.edtEndereco.setText(endereco.ds_endereco)
+                        binding.edtNumero.setText(endereco.ds_numero)
+                        binding.edtComplemento.setText(endereco.ds_complemento)
+                        binding.edtCidade.setText(endereco.ds_cidade)
+                        binding.edtUF.setText(endereco.ds_uf)
+                    }
+
+                } else {
+
+                    if (response.code() == 401) {
+                        chamaLogin()
+                    } else {
+                        msg(binding.cardView2, "Não é possível carregar os dados do endereço")
+                    }
+
+                    Log.e("ERROR", response.code().toString())
                 }
             }
+
+            override fun onFailure(call: Call<Endereco>, t: Throwable) {
+                //CarregaOff()
+                msg(binding.cardView2, "Não é possível se conectar ao servidor")
+                Log.e("ERROR", "Falha ao executar serviço", t)
+
+            }
+
+        }
+
+        var clienteId = retornaClienteId(ctx)
+        API(ctx).cliente.enderecos(clienteId).enqueue(callback)
     }
+
+    fun atualizaValores(){
+
+        val callback = object : Callback<Carrinho> {
+            override fun onResponse(call: Call<Carrinho>, response: Response<Carrinho>) {
+
+                if(response.isSuccessful){
+
+                    val carrinho = response.body()
+
+                    if (carrinho != null) {
+
+                        //Se não tiver produto, vai para o carrinho
+                        if(carrinho.valor == 0.0){
+                            containerFrag?.let{
+                                parentFragmentManager.beginTransaction().replace(it.id, CarrinhoFragment()).addToBackStack("Carrinho").commit()
+                            }
+                        }
+
+                        var frete = 00.00
+                        binding.lblFrete.text = "R$ ${formataNumero(frete,"dinheiro")}"
+                        binding.lblTotProd.text =  "R$ ${formataNumero(carrinho.valor, "dinheiro")}"
+                        binding.lblVlTotal.text = "R$ ${formataNumero(frete + carrinho.valor, "dinheiro")}"
+                        atualizarUI(carrinho.itens)
+
+                    }
+
+                }else{
+                    carregaOff()
+                    if(response.code() == 401){
+                        chamaLogin()
+                    }else{
+                        msg(binding.cardView2,"Não é possível atualizar o carrinho")
+                    }
+
+                    Log.e("ERROR", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<Carrinho>, t: Throwable) {
+                msg(binding.cardView2,"Não é possível se conectar ao servidor")
+                Log.e("ERROR", "Falha ao executar serviço", t)
+
+            }
+
+        }
+        var clienteId = retornaClienteId(ctx)
+
+        if (clienteId != null) {
+            API(ctx).carrinho.show(clienteId).enqueue(callback)
+        }
+    }
+
+    fun atualizarUI(carrinho: List<CarrinhoItem>?){
+        binding.contItensPed.removeAllViews()
+        carregaOn()
+
+        carrinho?.forEach{
+
+
+            val cardBinding = ProdutoCheckoutBinding.inflate(layoutInflater)
+            var idProduto = it.produto_id
+
+            cardBinding.lblQuantCheck.text = it.qt_produto.toString()
+
+            cardBinding.imgRemove.setOnClickListener {
+                deleteProduto(idProduto)
+            }
+
+            cardBinding.cardView.setOnClickListener {
+                containerFrag?.let {
+                    parentFragmentManager.beginTransaction().replace(it.id,  ProdutoDescFragment.newInstance(idProduto))
+                        .addToBackStack("Home").commit()
+                }
+            }
+
+            val callback = object : Callback<List<Produto>> {
+                override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
+
+                    if(response.isSuccessful){
+                        val produto = response.body()
+
+                        if (produto != null) {
+
+
+                            produto.forEach {
+                                carregaOn()
+                                var precoProduto = it.vl_produto * cardBinding.lblQuantCheck.text.toString().toInt()
+
+                                cardBinding.lblNomePro.text         = it.ds_nome
+                                cardBinding.lblPrecoUni.text        =  " - R$ ${formataNumero(it.vl_produto, "dinheiro")}"
+                                cardBinding.lblValorTotProduto.text = "R$ ${formataNumero(precoProduto, "dinheiro")}"
+
+                                //Montando o shimmer para o picaso usar
+                                var sDrawable = montaShimmerPicaso()
+
+                                if(it.ds_linkfoto.isNotEmpty()){
+                                    Picasso.get()
+                                        .load(it.ds_linkfoto)
+                                        .placeholder(sDrawable)
+                                        .error(R.drawable.no_image)
+                                        .into(cardBinding.imgProduto)
+                                }
+                                carregaOff()
+                            }
+
+
+                        }
+
+                    }else{
+                        carregaOff()
+                        msg(binding.cardView2,"Não é possível atualizar o produto")
+                        Log.e("ERROR", response.errorBody().toString())
+                    }
+
+
+                }
+
+                override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
+                    carregaOff()
+                    msg(binding.cardView2,"Não é possível se conectar ao servidor")
+                    Log.e("ERROR", "Falha ao executar serviço", t)
+
+                }
+
+            }
+            API(ctx).produto.show(idProduto).enqueue(callback)
+
+            binding.contItensPed.addView(cardBinding.root)
+
+
+        }
+
+    }
+
+    fun deleteProduto(id: Int){
+
+        val callback = object : Callback<CarrinhoItem> {
+            override fun onResponse(call: Call<CarrinhoItem>, response: Response<CarrinhoItem>) {
+                if(response.isSuccessful){
+
+                    val carrinho = response.body()
+
+                    if (carrinho != null) {
+                        atualizaDados()
+                    }
+
+                }else{
+
+                    if(response.code() == 401){
+                        chamaLogin()
+                    }else{
+                        msg(binding.cardView2,"Não é possível atualizar o carrinho")
+                    }
+
+                    Log.e("ERROR", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<CarrinhoItem>, t: Throwable) {
+                msg(binding.cardView2,"Não é possível se conectar ao servidor")
+                Log.e("ERROR", "Falha ao executar serviço", t)
+
+            }
+
+        }
+        API(ctx).carrinho.delete(id).enqueue(callback)
+    }
+
+    fun carregaOn(){
+        binding.contDados.visibility = View.INVISIBLE
+        binding.progressCheck.visibility = View.VISIBLE
+    }
+
+    fun carregaOff(){
+        binding.contDados.visibility = View.VISIBLE
+        binding.progressCheck.visibility = View.GONE
+    }
+
+
 }

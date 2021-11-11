@@ -99,7 +99,7 @@
             android:id="@+id/lblSemProd"
             android:layout_width="302dp"
             android:layout_height="103dp"
-            android:text="Sem carrinho ainda não contém produtos :("
+            android:text="Seu carrinho ainda não contém produtos :("
             android:textAlignment="center"
             android:textColor="#9C9C9C"
             android:textSize="25sp"

@@ -18,6 +18,7 @@
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/card_pedido_shimmer.xml" value="0.25" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/fragment_carrinho.xml" value="0.25" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/fragment_categorias.xml" value="0.22" />
+        <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/fragment_checkout.xml" value="0.25" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/fragment_historico_compra.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/fragment_home.xml" value="0.26857142857142857" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/fragment_lista_perfil.xml" value="0.33" />
@@ -28,6 +29,7 @@
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/produto_card_shimmer.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/produto_carrinho.xml" value="0.33" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/produto_carrinho_shimmer.xml" value="0.1925925925925926" />
+        <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/produto_checkout.xml" value="0.33" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/produto_desc_shimmer.xml" value="0.25" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/produto_list_card.xml" value="0.33" />
         <entry key="..\:/Android/PI4_APP_Netuno/app/src/main/res/layout/produto_list_card_shimmer.xml" value="0.20416666666666666" />
