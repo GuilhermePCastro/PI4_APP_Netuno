@@ -25,6 +25,7 @@ import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.TimeUnit
 
 class CarrinhoFragment : Fragment() {
     lateinit var  binding: FragmentCarrinhoBinding
@@ -78,9 +79,8 @@ class CarrinhoFragment : Fragment() {
 
                     if (carrinho != null) {
                         binding.lbTotal.text =  "R$ ${formataNumero(carrinho.valor, "dinheiro")}"
-                        if (atualizarUI(carrinho.itens)){
-                            CarregaOff()
-                        }
+                        atualizarUI(carrinho.itens)
+
 
                     }
 
@@ -113,7 +113,7 @@ class CarrinhoFragment : Fragment() {
 
     }
 
-    fun atualizarUI(carrinho: List<CarrinhoItem>?): Boolean {
+    fun atualizarUI(carrinho: List<CarrinhoItem>?) {
         binding.containerCarrinho.removeAllViews()
 
         if (carrinho != null) {
@@ -125,10 +125,12 @@ class CarrinhoFragment : Fragment() {
         }
 
         carrinho?.forEach{
-            val cardBinding = ProdutoCarrinhoBinding.inflate(layoutInflater)
-            var idProduto = it.produto_id
 
+            val cardBinding = ProdutoCarrinhoBinding.inflate(layoutInflater)
+
+            var idProduto = it.produto_id
             cardBinding.lblQuantidade.text = it.qt_produto.toString()
+
 
             val callback = object : Callback<List<Produto>> {
                 override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
@@ -137,6 +139,7 @@ class CarrinhoFragment : Fragment() {
                         val produto = response.body()
 
                         if (produto != null) {
+
                             produto.forEach {
 
                                 var precoProduto = it.vl_produto * cardBinding.lblQuantidade.text.toString().toInt()
@@ -153,6 +156,33 @@ class CarrinhoFragment : Fragment() {
                                         .placeholder(sDrawable)
                                         .error(R.drawable.no_image)
                                         .into(cardBinding.imgProduto)
+                                }
+
+                                cardBinding.btnAdd.setOnClickListener {
+                                    addProduto(idProduto)
+                                }
+
+                                cardBinding.btnRemove.setOnClickListener {
+                                    removeProduto(idProduto)
+                                }
+
+                                cardBinding.imgRemove.setOnClickListener {
+                                    deleteProduto(idProduto)
+                                }
+
+                                cardBinding.cardView.setOnClickListener {
+                                    containerFrag?.let {
+                                        parentFragmentManager.beginTransaction().replace(it.id,  ProdutoDescFragment.newInstance(idProduto))
+                                            .addToBackStack("Home").commit()
+                                    }
+                                }
+
+                                if(carrinho.size > binding.containerCarrinho.childCount){
+                                    binding.containerCarrinho.addView(cardBinding.root)
+                                }
+
+                                if(carrinho.size == binding.containerCarrinho.childCount){
+                                    CarregaOff()
                                 }
 
 
@@ -182,30 +212,10 @@ class CarrinhoFragment : Fragment() {
 
             API(ctx).produto.show(idProduto).enqueue(callback)
 
-            cardBinding.btnAdd.setOnClickListener {
-                addProduto(idProduto)
-            }
-
-            cardBinding.btnRemove.setOnClickListener {
-                removeProduto(idProduto)
-            }
-
-            cardBinding.imgRemove.setOnClickListener {
-                deleteProduto(idProduto)
-            }
-
-            cardBinding.cardView.setOnClickListener {
-                containerFrag?.let {
-                    parentFragmentManager.beginTransaction().replace(it.id,  ProdutoDescFragment.newInstance(idProduto))
-                        .addToBackStack("Home").commit()
-                }
-            }
-
-            binding.containerCarrinho.addView(cardBinding.root)
 
         }
 
-        return true
+
 
     }
 

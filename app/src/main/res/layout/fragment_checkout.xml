@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
                 android:indeterminateTint="@color/secondary_color"
-                tools:visibility="gone" />
+                tools:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/contDados"

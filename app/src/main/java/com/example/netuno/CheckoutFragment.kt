@@ -100,7 +100,6 @@ class CheckoutFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<Endereco>, t: Throwable) {
-                //CarregaOff()
                 msg(binding.cardView2, "Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
@@ -165,8 +164,8 @@ class CheckoutFragment : Fragment() {
     }
 
     fun atualizarUI(carrinho: List<CarrinhoItem>?){
-        binding.contItensPed.removeAllViews()
         carregaOn()
+        binding.contItensPed.removeAllViews()
 
         carrinho?.forEach{
 
@@ -197,7 +196,6 @@ class CheckoutFragment : Fragment() {
 
 
                             produto.forEach {
-                                carregaOn()
                                 var precoProduto = it.vl_produto * cardBinding.lblQuantCheck.text.toString().toInt()
 
                                 cardBinding.lblNomePro.text         = it.ds_nome
@@ -214,8 +212,19 @@ class CheckoutFragment : Fragment() {
                                         .error(R.drawable.no_image)
                                         .into(cardBinding.imgProduto)
                                 }
-                                carregaOff()
+
+                                if(carrinho.size > binding.contItensPed.childCount){
+                                    binding.contItensPed.addView(cardBinding.root)
+
+                                }
+
+                                if(carrinho.size == binding.contItensPed.childCount){
+                                    carregaOff()
+
+                                }
                             }
+
+
 
 
                         }
@@ -236,13 +245,16 @@ class CheckoutFragment : Fragment() {
 
                 }
 
+
+
             }
             API(ctx).produto.show(idProduto).enqueue(callback)
 
-            binding.contItensPed.addView(cardBinding.root)
+
 
 
         }
+
 
     }
 
