@@ -11,7 +11,7 @@ import retrofit2.http.Path
 interface PedidoAPI {
 
     @POST("/api/pedido/add")
-    fun add(@Body pedido: Pedido): Call<Pedido>
+    fun add(@Body pedido: Pedido): Call<List<Pedido>>
 
     @GET("/api/pedido")
     fun index(): Call<Pedido>

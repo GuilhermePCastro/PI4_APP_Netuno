@@ -118,9 +118,9 @@ class CarrinhoFragment : Fragment() {
 
         if (carrinho != null) {
             if(carrinho.isEmpty()){
-                binding.lblSemProd.visibility = View.VISIBLE
-                binding.btnFinalizar.visibility = View.INVISIBLE
                 CarregaOff()
+                binding.lblSemProd.visibility = View.VISIBLE
+                binding.cardView.visibility = View.GONE
             }
         }
 
@@ -341,12 +341,14 @@ class CarrinhoFragment : Fragment() {
 
     fun CarregaOn(){
         binding.swipperCarrinho.isRefreshing = true
+        binding.cardView.visibility = View.GONE
         binding.containerCarrinho.visibility = View.INVISIBLE
     }
 
     fun CarregaOff() {
         binding.swipperCarrinho.isRefreshing = false
         binding.containerCarrinho.visibility = View.VISIBLE
+        binding.cardView.visibility = View.VISIBLE
 
     }
 

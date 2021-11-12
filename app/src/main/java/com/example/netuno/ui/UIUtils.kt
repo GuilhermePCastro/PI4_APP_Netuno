@@ -11,6 +11,16 @@ import com.example.netuno.activitys.MainActivity
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.google.android.material.snackbar.Snackbar
+import android.graphics.Bitmap
+
+import android.graphics.BitmapFactory
+import android.util.Base64
+import java.io.ByteArrayOutputStream
+import java.lang.Exception
+import android.R
+import android.net.Uri
+import androidx.core.graphics.drawable.toDrawable
+
 
 fun alert (titulo: String, msg: String, ctx: Context){
 
@@ -109,4 +119,22 @@ fun alertFun (titulo: String, msg: String, ctx: Context): AlertDialog.Builder? {
         .setMessage(msg)
         .setPositiveButton("OK",null)
 
+}
+
+
+fun imgToBase64(img: Bitmap?): String {
+
+    var bos = ByteArrayOutputStream()
+    if (img != null) {
+        img.compress(Bitmap.CompressFormat.JPEG, 10, bos)
+    }
+    var encodeString = Base64.encodeToString(bos.toByteArray(), Base64.NO_PADDING);
+
+    return encodeString
+}
+
+fun Base64toImg(string: String): Bitmap {
+
+    var decodeString = Base64.decode(string, Base64.NO_PADDING)
+    return BitmapFactory.decodeByteArray(decodeString, 0, decodeString.size)
 }

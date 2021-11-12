@@ -14,11 +14,9 @@ import com.example.netuno.databinding.FragmentCheckoutBinding
 import com.example.netuno.databinding.ProdutoCarrinhoBinding
 import com.example.netuno.databinding.ProdutoCheckoutBinding
 import com.example.netuno.fragments.CarrinhoFragment
+import com.example.netuno.fragments.HistoricoCompraFragment
 import com.example.netuno.fragments.ProdutoDescFragment
-import com.example.netuno.model.Carrinho
-import com.example.netuno.model.CarrinhoItem
-import com.example.netuno.model.Endereco
-import com.example.netuno.model.Produto
+import com.example.netuno.model.*
 import com.example.netuno.ui.*
 import com.example.netuno.ui.login.LoginActivity
 import com.squareup.picasso.Picasso
@@ -32,6 +30,10 @@ class CheckoutFragment : Fragment() {
     lateinit var containerFrag: ViewGroup
     lateinit var ctx: Context
 
+    //Dados para gerar pedido
+    var total = 0.00
+    var frete = 0.00
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCheckoutBinding.inflate(inflater)
         if (container != null) {
@@ -44,6 +46,10 @@ class CheckoutFragment : Fragment() {
 
         verificaLogin()
         atualizaDados()
+
+        binding.extendedFab.setOnClickListener {
+            geraPedido(total, frete)
+        }
 
         return binding.root
     }
@@ -129,7 +135,9 @@ class CheckoutFragment : Fragment() {
                             }
                         }
 
-                        var frete = 00.00
+                        frete = 00.00
+                        total = carrinho.valor
+
                         binding.lblFrete.text = "R$ ${formataNumero(frete,"dinheiro")}"
                         binding.lblTotProd.text =  "R$ ${formataNumero(carrinho.valor, "dinheiro")}"
                         binding.lblVlTotal.text = "R$ ${formataNumero(frete + carrinho.valor, "dinheiro")}"
@@ -292,6 +300,74 @@ class CheckoutFragment : Fragment() {
         API(ctx).carrinho.delete(id).enqueue(callback)
     }
 
+    fun geraPedido(totalPedido: Double, frete: Double){
+
+        val callback = object : Callback<List<Pedido>> {
+            override fun onResponse(call: Call<List<Pedido>>, response: Response<List<Pedido>>) {
+
+                //CarregaOff()
+                if (response.isSuccessful) {
+
+                    val pedido = response.body()
+                    if (pedido != null) {
+
+                        var alert = alertFun("Pedido #${pedido[0].id} Gerado!", "A Netuno agradece a compra :)", ctx)
+
+                        if (alert != null) {
+                            alert.setOnDismissListener {
+                                containerFrag?.let {
+                                    parentFragmentManager.beginTransaction().replace(it.id,  HistoricoCompraFragment())
+                                        .addToBackStack("Checkout").commit()
+                                }
+                            }
+                            alert.create().show()
+                        }
+
+                    }
+
+                } else {
+                    carregaOff()
+                    if (response.code() == 401) {
+                        chamaLogin()
+                    } else {
+
+                    }
+
+                    Log.e("ERROR", response.code().toString())
+                    Log.e("ERROR", response.body().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<List<Pedido>>, t: Throwable) {
+                carregaOff()
+                msg(binding.cardView2, "Não é possível se conectar ao servidor")
+                Log.e("ERROR", "Falha ao executar serviço", t)
+
+            }
+
+        }
+
+        var pedido = Pedido(
+            "Em aberto",
+            totalPedido,
+            binding.edtNumero.text.toString(),
+            "",
+            binding.edtCidade.text.toString(),
+            "",
+            binding.edtUF.text.toString(),
+            0,
+            binding.edtCEP.text.toString(),
+            frete,
+            binding.edtComplemento.text.toString(),
+            retornaClienteId(ctx),
+            binding.edtEndereco.text.toString(),
+            null
+        )
+        API(ctx).pedido.add(pedido).enqueue(callback)
+        carregaOn()
+
+    }
+
     fun carregaOn(){
         binding.contDados.visibility = View.INVISIBLE
         binding.progressCheck.visibility = View.VISIBLE
@@ -301,6 +377,7 @@ class CheckoutFragment : Fragment() {
         binding.contDados.visibility = View.VISIBLE
         binding.progressCheck.visibility = View.GONE
     }
+
 
 
 }

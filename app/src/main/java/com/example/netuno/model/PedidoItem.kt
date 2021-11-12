@@ -1,10 +1,10 @@
 package com.example.netuno.model
 
 data class PedidoItem(
-	val updatedAt: String,
+	val updated_at: String,
 	val vl_produto: Double,
 	val qt_produto: Int,
-	val createdAt: String,
+	val created_at: String,
 	val id: Int,
 	val produto_id: Int,
 	val pedido_id: Int

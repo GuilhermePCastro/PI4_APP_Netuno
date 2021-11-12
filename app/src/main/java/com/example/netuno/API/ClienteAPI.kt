@@ -18,6 +18,7 @@ interface ClienteAPI {
     @GET("/api/cliente/{id}/pedidos")
     fun pedidos(@Path("id") id: Int): Call<List<Pedido>>
 
+    @Multipart
     @POST("/api/cliente")
     fun store(@Body cliente: Cliente): Call<Cliente>
 

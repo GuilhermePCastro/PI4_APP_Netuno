@@ -10,9 +10,9 @@ data class Pedido(
 	val ds_uf: String,
 	val id: Int,
 	val ds_cep: String,
-	val vl_frete: Int,
+	val vl_frete: Double,
 	val ds_complemento: String,
 	val clienteId: Int,
 	val ds_endereco: String,
-	val itens: List<PedidoItem>
+	val itens: List<PedidoItem>?
 )

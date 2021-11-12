@@ -2,10 +2,14 @@ package com.example.netuno
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.netuno.API.API
 import com.example.netuno.activitys.MainActivity
 import com.example.netuno.databinding.ActivityProfileBinding
@@ -18,6 +22,12 @@ import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.R.drawable
+
+import android.graphics.drawable.BitmapDrawable
+
+
+
 
 class Profile : AppCompatActivity() {
 
@@ -27,6 +37,7 @@ class Profile : AppCompatActivity() {
     var clienteId: Int = 0
     var enderecoId: Int = 0
     var ctx: Context = this
+    lateinit var img: Bitmap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +45,29 @@ class Profile : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+        val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode == RESULT_OK){
+                val imgFoto: Uri? = it.data?.data
+                if (imgFoto != null) {
+                    val bitmap =  MediaStore.Images.Media.getBitmap(this.contentResolver, imgFoto)
+                    binding.imageView.setImageResource(R.drawable.ic_baseline_account_circle_24)
+                    binding.imageView.setImageBitmap(bitmap)
+                    if (bitmap != null) {
+                        img = bitmap
+                    }
+                }
+            }
+        }
+
+        binding.fabFoto.setOnClickListener {
+            val i = Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            //startActivity(i)
+
+            launcher.launch(i)
+
+        }
 
         clienteId = retornaClienteId(this)
 
@@ -46,7 +80,7 @@ class Profile : AppCompatActivity() {
             atuUiNovo()
         }
 
-        binding.floatingActionButton2.setOnClickListener {
+        binding.fabSalva.setOnClickListener {
 
             if (clienteId != 0) {
                 updateCliente()
@@ -55,6 +89,8 @@ class Profile : AppCompatActivity() {
             }
 
         }
+
+
 
 
     }
@@ -67,7 +103,7 @@ class Profile : AppCompatActivity() {
         //Verificando se é uma conta nova ou alteração
         if (clienteId != 0) {
             verificaLogin()
-            pegaCliente()
+            //pegaCliente()
         } else {
             CarregaOff()
             atuUiNovo()
@@ -126,7 +162,7 @@ class Profile : AppCompatActivity() {
 
             override fun onFailure(call: Call<List<Cliente>>, t: Throwable) {
                 CarregaOff()
-                msg(binding.usernameView, "Não é possível se conectar ao servidor")
+                //msg(binding.usernameView, "Não é possível se conectar ao servidor")
                 Log.e("ERROR", "Falha ao executar serviço", t)
 
             }
@@ -147,6 +183,9 @@ class Profile : AppCompatActivity() {
             binding.editTextPhone.setText(it.ds_celular)
             binding.editTextTextEmailAddress.setText(it.ds_email)
             binding.editTextTextEmailAddress.isEnabled = false
+            if(it.ds_fotoperfil != ""){
+                binding.imageView.setImageBitmap(Base64toImg(it.ds_fotoperfil))
+            }
 
             pegaEndereco(it.id)
         }
@@ -243,7 +282,8 @@ class Profile : AppCompatActivity() {
                     clienteId,
                     binding.editTextTextPersonCPF.text.toString(),
                     binding.editTextTextEmailAddress.text.toString(),
-                    binding.editTextTextPassword.text.toString()
+                    binding.editTextTextPassword.text.toString(),
+                    if(img == null){""}else{imgToBase64(img)}
                 )
 
                 API(this).cliente.update(cliente, clienteId).enqueue(callback)
@@ -313,7 +353,7 @@ class Profile : AppCompatActivity() {
 
     fun atuUiNovo() {
         binding.usernameView.text = "Novo usuário"
-        binding.floatingActionButton2.text = "Criar conta"
+        binding.fabSalva.text = "Criar conta"
     }
 
     fun criaUsuario() {
@@ -403,6 +443,7 @@ class Profile : AppCompatActivity() {
 
         }
 
+
         var cliente = Cliente(
             binding.editTextTextPersonName.text.toString(),
             "",
@@ -412,7 +453,8 @@ class Profile : AppCompatActivity() {
             0,
             binding.editTextTextPersonCPF.text.toString(),
             binding.editTextTextEmailAddress.text.toString(),
-            binding.editTextTextPassword.text.toString()
+            binding.editTextTextPassword.text.toString(),
+            if(img == null){""}else{imgToBase64(img)}
         )
 
         API(this).cliente.store(cliente).enqueue(callback)
