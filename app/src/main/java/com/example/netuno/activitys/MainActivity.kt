@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.example.netuno.R
 import com.example.netuno.databinding.ActivityMainBinding
 import com.example.netuno.fragments.*
@@ -40,6 +41,9 @@ class MainActivity : AppCompatActivity() {
                     .replace(R.id.containerHistCompra, HomeFragment()).addToBackStack("fragHome").commit()
                 R.id.categoria -> supportFragmentManager.beginTransaction()
                     .replace(R.id.containerHistCompra, CategoriasFragment()).addToBackStack("fragHome").commit()
+                R.id.qrcode ->{
+                    startActivityForResult(Intent(this, QrCodeActivity::class.java), 1)
+                }
                 else -> supportFragmentManager.beginTransaction()
                     .replace(R.id.containerHistCompra, HomeFragment()).addToBackStack("fragHome").commit()
             }
@@ -65,6 +69,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == 1 && resultCode == RESULT_OK && data != null ){
+            val prodId = data.getStringExtra("qrcode")?.toInt()
+
+            if(prodId != null){
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.containerHistCompra, ProdutoDescFragment.newInstance(prodId)).addToBackStack("fragHome").commit()
+            }
+        }
     }
 
 }

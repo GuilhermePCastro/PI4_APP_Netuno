@@ -9,8 +9,7 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:stretchColumns="1"
-        tools:visibility="visible">
+        android:stretchColumns="1">
 
         <TableRow
             android:id="@+id/rowProgress"
@@ -338,7 +337,7 @@
                         android:id="@+id/imageView"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+                        app:srcCompat="@drawable/images" />
                 </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

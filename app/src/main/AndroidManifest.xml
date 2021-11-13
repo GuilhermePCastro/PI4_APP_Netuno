@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.netuno">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo3"
@@ -12,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Netuno"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".activitys.QrCodeActivity"
+            android:exported="true" />
         <activity
             android:name=".activitys.MainActivity"
             android:exported="true">
@@ -24,21 +30,16 @@
         <activity
             android:name=".Menu"
             android:exported="true"
-            android:parentActivityName=".activitys.MainActivity">
-        </activity>
+            android:parentActivityName=".activitys.MainActivity"></activity>
         <activity
             android:name=".Profile"
             android:exported="true"
-            android:parentActivityName=".activitys.MainActivity"/>
+            android:parentActivityName=".activitys.MainActivity" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:parentActivityName=".activitys.MainActivity">
-        </activity>
+            android:parentActivityName=".activitys.MainActivity"></activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

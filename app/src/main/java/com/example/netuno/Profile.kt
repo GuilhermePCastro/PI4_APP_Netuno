@@ -23,6 +23,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.R.drawable
+import android.graphics.BitmapFactory
 
 import android.graphics.drawable.BitmapDrawable
 
@@ -37,7 +38,7 @@ class Profile : AppCompatActivity() {
     var clienteId: Int = 0
     var enderecoId: Int = 0
     var ctx: Context = this
-    lateinit var img: Bitmap
+    var img: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -185,6 +186,8 @@ class Profile : AppCompatActivity() {
             binding.editTextTextEmailAddress.isEnabled = false
             if(it.ds_fotoperfil != ""){
                 binding.imageView.setImageBitmap(Base64toImg(it.ds_fotoperfil))
+            }else{
+                img = null
             }
 
             pegaEndereco(it.id)
@@ -268,6 +271,9 @@ class Profile : AppCompatActivity() {
 
         }
 
+
+        var imgvazia = BitmapFactory.decodeResource(getResources(),R.drawable.images)
+
         if (binding.editTextTextPassword.text.toString() == "") {
             msg(binding.usernameView, "Preencha a senha para continuar")
             binding.editTextTextPassword.requestFocus()
@@ -283,7 +289,7 @@ class Profile : AppCompatActivity() {
                     binding.editTextTextPersonCPF.text.toString(),
                     binding.editTextTextEmailAddress.text.toString(),
                     binding.editTextTextPassword.text.toString(),
-                    if(img == null){""}else{imgToBase64(img)}
+                    if(img == null){imgToBase64(imgvazia)}else{imgToBase64(img)}
                 )
 
                 API(this).cliente.update(cliente, clienteId).enqueue(callback)
@@ -443,6 +449,7 @@ class Profile : AppCompatActivity() {
 
         }
 
+        var imgvazia = BitmapFactory.decodeResource(getResources(),R.drawable.images)
 
         var cliente = Cliente(
             binding.editTextTextPersonName.text.toString(),
@@ -454,7 +461,7 @@ class Profile : AppCompatActivity() {
             binding.editTextTextPersonCPF.text.toString(),
             binding.editTextTextEmailAddress.text.toString(),
             binding.editTextTextPassword.text.toString(),
-            if(img == null){""}else{imgToBase64(img)}
+            if(img == null){imgToBase64(imgvazia) }else{imgToBase64(img)}
         )
 
         API(this).cliente.store(cliente).enqueue(callback)

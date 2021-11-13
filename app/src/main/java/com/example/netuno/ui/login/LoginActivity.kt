@@ -25,6 +25,7 @@ import com.example.netuno.fragments.HomeFragment
 import com.example.netuno.model.Cliente
 import com.example.netuno.model.Produto
 import com.example.netuno.model.User
+import com.example.netuno.ui.retornaToken
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,6 +41,11 @@ class LoginActivity : AppCompatActivity() {
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        var token = retornaToken(this)
+        if(token != ""){
+            startActivity(Intent(this, MainActivity::class.java))
+        }
 
         val username = binding.username
         val password = binding.password
