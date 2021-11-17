@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import com.example.netuno.R
 import com.example.netuno.databinding.ActivityMainBinding
 import com.example.netuno.fragments.*
@@ -58,6 +59,34 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
+
+        val sItem = menu?.findItem(R.id.pesquisa)
+        val sView = sItem?.actionView as SearchView
+
+        sView?.let{
+            val queryListener = object: SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                  query?.let{
+                      sView.clearFocus()
+                      sItem.collapseActionView()
+                      val fragmento = ListaProdutosFragment.newInstance(0, query)
+                      supportFragmentManager.beginTransaction().replace(R.id.containerHistCompra, fragmento).commit()
+                  }
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return true
+                }
+
+            }
+
+            sView.setOnQueryTextListener(queryListener)
+
+        }
+
+
+
         return super.onCreateOptionsMenu(menu)
     }
 

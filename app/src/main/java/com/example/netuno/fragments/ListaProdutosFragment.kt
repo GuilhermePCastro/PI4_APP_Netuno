@@ -60,14 +60,23 @@ class ListaProdutosFragment : Fragment() {
             containerPro = container
         }
 
-        //Setando o nome da categoria
-        binding.lblCatLista.text = catNome
+
 
         //Carrega os produtos da categoria
-        addListaProdutos()
+        if(catId != 0){
+            addListaProdutos()
+
+            binding.lblCatLista.text = catNome
+        }else{
+            addPesquisaProduto()
+            binding.lblCatLista.text = "Busca por '${catNome}'"
+        }
+
 
         binding.swipperListProd.setOnRefreshListener {
-            addListaProdutos()
+            if(catId != 0){
+                addListaProdutos()
+            }
         }
 
 
@@ -156,6 +165,32 @@ class ListaProdutosFragment : Fragment() {
         binding.shimmerListProd.visibility = View.GONE
         binding.shimmerListProd.stopShimmer()
         binding.swipperListProd.isRefreshing = false
+    }
+
+    fun addPesquisaProduto(){
+
+        val callback = object : Callback<List<Produto>> {
+            override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
+                CarregaOff()
+                if(response.isSuccessful){
+                    val produtos = response.body()
+                    atualizarUI(produtos)
+                }else{
+                    msg(binding.containerListProd,"Não é possível atualizar os produtos")
+                    Log.e("ERROR", response.errorBody().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
+                CarregaOff()
+                msg(binding.containerListProd,"Não é possível se conectar ao servidor")
+                Log.e("ERROR", "Falha ao executar serviço", t)
+            }
+
+        }
+
+        catNome?.let { API(ctx).produto.filtro(it).enqueue(callback) }
+        CarregaOn()
     }
 
 
