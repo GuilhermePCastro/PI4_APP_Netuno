@@ -48,7 +48,10 @@ class CheckoutFragment : Fragment() {
         atualizaDados()
 
         binding.extendedFab.setOnClickListener {
-            geraPedido(total, frete)
+            if(validaDados()){
+                geraPedido(total, frete)
+            }
+
         }
 
         return binding.root
@@ -347,6 +350,8 @@ class CheckoutFragment : Fragment() {
 
         }
 
+
+
         var pedido = Pedido(
             "Em aberto",
             totalPedido,
@@ -376,6 +381,48 @@ class CheckoutFragment : Fragment() {
     fun carregaOff(){
         binding.contDados.visibility = View.VISIBLE
         binding.progressCheck.visibility = View.GONE
+    }
+
+    fun validaDados(): Boolean {
+
+        var retorno = true
+
+        if(binding.edtCEP.text.isEmpty()){
+            msg(binding.contPrincipal, "Campo CEP vázio!")
+            binding.edtCEP.requestFocus()
+
+            retorno = false
+
+        }else if(binding.edtCidade.text.isEmpty()){
+            msg(binding.contPrincipal, "Campo Cidade vázio!")
+            binding.edtCidade.requestFocus()
+
+            retorno = false
+
+        }else if(binding.edtEndereco.text.isEmpty()){
+            msg(binding.contPrincipal, "Campo Endereço vázio!")
+            binding.edtEndereco.requestFocus()
+
+            retorno = false
+
+        }else if(binding.edtNumero.text.isEmpty()){
+            msg(binding.contPrincipal, "Campo Número vázio!")
+            binding.edtNumero.requestFocus()
+
+            retorno = false
+
+        }else if(binding.edtUF.text.isEmpty()){
+            msg(binding.contPrincipal, "Campo UF vázio!")
+            binding.edtUF.requestFocus()
+
+            retorno = false
+
+        }else if(binding.edtComplemento.text.isEmpty()){
+            binding.edtComplemento.setText("N/A")
+        }
+
+        return retorno
+
     }
 
 

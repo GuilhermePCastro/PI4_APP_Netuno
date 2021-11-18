@@ -13,11 +13,8 @@ import com.example.netuno.R
 import com.example.netuno.databinding.FragmentProdutoDescBinding
 import com.example.netuno.model.CarrinhoItem
 import com.example.netuno.model.Produto
-import com.example.netuno.ui.formataNumero
+import com.example.netuno.ui.*
 import com.example.netuno.ui.login.LoginActivity
-import com.example.netuno.ui.montaShimmerPicaso
-import com.example.netuno.ui.msg
-import com.example.netuno.ui.retornaToken
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import retrofit2.Call
@@ -77,8 +74,25 @@ class ProdutoDescFragment : Fragment() {
                     }
 
                 }else{
-                    msg(binding.scrollProdDesc,"Não é possível carregar os dados do produto")
-                    Log.e("ERROR", response.errorBody().toString())
+                    if(response.code() == 404){
+
+                        binding.scrollProdDesc.visibility = View.INVISIBLE
+                        var alert = alertFun("Produto inválido", "Não foi possível achar o produto pesquisado :(", ctx)
+
+                        if (alert != null) {
+                            alert.setOnDismissListener {
+                                containerPro?.let{
+                                    parentFragmentManager.beginTransaction().replace(it.id, HomeFragment()).addToBackStack("listaPerfil").commit()
+                                }
+                            }
+                            alert.create().show()
+                        }
+
+                    }else{
+                        msg(binding.scrollProdDesc,"Não é possível carregar os dados do produto")
+                        Log.e("ERROR", response.errorBody().toString())
+                    }
+
                 }
             }
 
