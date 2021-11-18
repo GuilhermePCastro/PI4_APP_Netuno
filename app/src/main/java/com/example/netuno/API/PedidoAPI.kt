@@ -17,6 +17,6 @@ interface PedidoAPI {
     fun index(): Call<Pedido>
 
     @GET("/api/pedido/{id}")
-    fun show(@Path("id") id: Int): Call<Carrinho>
+    fun show(@Path("id") id: Int): Call<List<Pedido>>
 
 }

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.netuno.API.API
+import com.example.netuno.OrderFragment
 import com.example.netuno.R
 import com.example.netuno.databinding.CardPedidoBinding
 import com.example.netuno.databinding.FragmentHistoricoCompraBinding
@@ -113,7 +114,14 @@ class HistoricoCompraFragment : Fragment() {
             cardBinding.lblEnviado.text = "Status: ${it.ds_status}"
             cardBinding.lblPedido.text = "Pedido #${it.id}"
 
-            var pedidoId = it.id
+            var produtoId = it.id
+
+            cardBinding.cardView.setOnClickListener {
+                containerFrag?.let {
+                    parentFragmentManager.beginTransaction().replace(it.id,  OrderFragment.newInstance(produtoId))
+                        .addToBackStack("ListaCategoria").commit()
+                }
+            }
 
             binding.containerHistCompra.addView(cardBinding.root)
 
