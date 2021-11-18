@@ -37,7 +37,7 @@
 
                     <TextView
                         android:id="@+id/lblNomePro"
-                        android:layout_width="wrap_content"
+                        android:layout_width="173dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
@@ -45,7 +45,7 @@
                         android:text="Produto 1"
                         android:textAlignment="viewStart"
                         android:textColor="#1374C1"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </TableRow>
 
                 <TableRow
@@ -98,22 +98,22 @@
 
                     <TextView
                         android:id="@+id/lblValorTotProduto"
-                        android:layout_width="110dp"
+                        android:layout_width="188dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="0"
                         android:text="R$ 99,99"
                         android:textColor="#505050"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/imgRemove"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_weight="1"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="0"
                         app:srcCompat="@drawable/ic_baseline_delete_24" />
                 </TableRow>
 

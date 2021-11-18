@@ -9,14 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.netuno.API.API
 import com.example.netuno.databinding.FragmentOrderBinding
-import com.example.netuno.databinding.FragmentProdutoDescBinding
+import com.example.netuno.databinding.ProdutoCheckoutBinding
 import com.example.netuno.fragments.HomeFragment
 import com.example.netuno.model.Pedido
 import com.example.netuno.model.Produto
-import com.example.netuno.ui.alertFun
-import com.example.netuno.ui.formataData
-import com.example.netuno.ui.formataNumero
-import com.example.netuno.ui.msg
+import com.example.netuno.ui.*
+import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -60,7 +58,7 @@ class OrderFragment : Fragment() {
 
         val callback = object : Callback<List<Pedido>> {
             override fun onResponse(call: Call<List<Pedido>>, response: Response<List<Pedido>>) {
-                carregaOff()
+
                 if(response.isSuccessful){
                     val pedido = response.body()
                     if (pedido != null) {
@@ -91,7 +89,10 @@ class OrderFragment : Fragment() {
 
     fun atualizarUI(pedido: List<Pedido>){
 
+
         pedido.forEach {
+            binding.contProdutosPed.removeAllViews()
+
             binding.txtCodPedido.text = "Pedido #${it.id}"
             binding.txtData.text = formataData(it.created_at)
             binding.txtStatusPed.text = "Status: ${it.ds_status}"
@@ -101,12 +102,91 @@ class OrderFragment : Fragment() {
             binding.edtCEPped.text = "CEP ${it.ds_cep}"
             binding.edtCidadePed.text = it.ds_cidade
             binding.edtUFPed.text = it.ds_uf
-            binding.txtValorFrete.text = "R$ ${formataNumero(it.vl_frete,"dinheiro")}"
-            binding.txtValorProd.text = "R$ ${formataNumero(it.vl_total - it.vl_frete,"dinheiro")}"
-            binding.txtValorTot.text = "R$ ${formataNumero(it.vl_total,"dinheiro")}"
+            binding.txtValorFrete.text = "R$ ${formataNumero(it.vl_frete, "dinheiro")}"
+            binding.txtValorProd.text = "R$ ${formataNumero(it.vl_total - it.vl_frete, "dinheiro")}"
+            binding.txtValorTot.text = "R$ ${formataNumero(it.vl_total, "dinheiro")}"
+
+            var itens = it.itens
+
+            itens?.forEach {
+                val cardBinding = ProdutoCheckoutBinding.inflate(layoutInflater)
+                var idProduto = it.produto_id
+                cardBinding.lblQuantCheck.text = it.qt_produto.toString()
+
+                val callback = object : Callback<List<Produto>> {
+                    override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
+
+                        if(response.isSuccessful){
+                            val produto = response.body()
+
+                            if (produto != null) {
+
+
+                                produto.forEach {
+                                    var precoProduto = it.vl_produto * cardBinding.lblQuantCheck.text.toString().toInt()
+
+                                    cardBinding.lblNomePro.text         = it.ds_nome
+                                    cardBinding.lblPrecoUni.text        =  " - R$ ${formataNumero(it.vl_produto, "dinheiro")}"
+                                    cardBinding.lblValorTotProduto.text = "R$ ${formataNumero(precoProduto, "dinheiro")}"
+                                    cardBinding.imgRemove.visibility = View.INVISIBLE
+
+                                    //Montando o shimmer para o picaso usar
+                                    var sDrawable = montaShimmerPicaso()
+
+                                    if(it.ds_linkfoto.isNotEmpty()){
+                                        Picasso.get()
+                                            .load(it.ds_linkfoto)
+                                            .placeholder(sDrawable)
+                                            .error(R.drawable.no_image)
+                                            .into(cardBinding.imgProduto)
+                                    }
+
+                                    if(itens.size > binding.contProdutosPed.childCount){
+                                        binding.contProdutosPed.addView(cardBinding.root)
+
+
+                                    }
+
+                                    if(itens.size == binding.contProdutosPed.childCount){
+                                        carregaOff()
+
+                                    }
+                                }
+
+
+
+
+                            }
+
+                        }else{
+                            carregaOff()
+                            msg(binding.contDados,"Não é possível atualizar o produto")
+                            Log.e("ERROR", response.errorBody().toString())
+                        }
+
+
+                    }
+
+                    override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
+                        carregaOff()
+                        msg(binding.contDados,"Não é possível se conectar ao servidor")
+                        Log.e("ERROR", "Falha ao executar serviço", t)
+
+                    }
+
+
+
+                }
+                API(ctx).produto.show(idProduto).enqueue(callback)
+
+
+            }
+
+
         }
 
     }
+
 
     fun carregaOn(){
         binding.contDados.visibility = View.INVISIBLE

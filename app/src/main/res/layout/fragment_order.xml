@@ -12,6 +12,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/contPrincipal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -39,7 +40,7 @@
                     android:layout_marginTop="16dp"
                     android:text="Pedido #0001"
                     android:textColor="@color/secondary_color"
-                    android:textSize="24sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -49,7 +50,7 @@
                     android:layout_marginLeft="16dp"
                     android:text="20/10/2021"
                     android:textColor="@color/secondary_color"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -163,8 +164,9 @@
                     android:textStyle="bold" />
 
                 <LinearLayout
+                    android:id="@+id/contProdutosPed"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 

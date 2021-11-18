@@ -319,8 +319,8 @@ class CheckoutFragment : Fragment() {
                         if (alert != null) {
                             alert.setOnDismissListener {
                                 containerFrag?.let {
-                                    parentFragmentManager.beginTransaction().replace(it.id,  HistoricoCompraFragment())
-                                        .addToBackStack("Checkout").commit()
+                                    parentFragmentManager.beginTransaction().replace(it.id,  OrderFragment.newInstance(pedido[0].id))
+                                        .addToBackStack("ListaCategoria").commit()
                                 }
                             }
                             alert.create().show()
