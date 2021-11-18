@@ -83,11 +83,15 @@ class Profile : AppCompatActivity() {
 
         binding.fabSalva.setOnClickListener {
 
-            if (clienteId != 0) {
-                updateCliente()
-            } else {
-                criaUsuario()
+            if(validaDados()){
+                if (clienteId != 0) {
+                    updateCliente()
+                } else {
+                    criaUsuario()
+                }
+
             }
+
 
         }
 
@@ -397,13 +401,15 @@ class Profile : AppCompatActivity() {
 
         }
 
+
+
         var user = User(
             binding.editTextTextEmailAddress.text.toString(),
             binding.editTextTextPersonName.text.toString(),
             "",
             "",
             0,
-           "",
+            "",
             "",
             binding.editTextTextPassword.text.toString(),
             ""
@@ -411,6 +417,8 @@ class Profile : AppCompatActivity() {
 
         API(this).user.store(user).enqueue(callback)
         CarregaOn()
+
+
 
 
     }
@@ -532,6 +540,81 @@ class Profile : AppCompatActivity() {
 
     fun chamaHome(){
         startActivity(Intent(this, MainActivity::class.java))
+    }
+
+    fun validaDados(): Boolean {
+
+        var retorno = true
+
+        if(binding.editTextTextPersonName.text.isEmpty()){
+            msg(binding.contProgress, "Preencha o campo de Nome!")
+            binding.editTextTextPersonName.requestFocus()
+
+            retorno = false
+
+        }else if(binding.editTextTextPersonCPF.text.isEmpty()){
+            msg(binding.contProgress, "Preencha o campo de CPF!")
+            binding.editTextTextPersonCPF.requestFocus()
+
+            retorno = false
+
+        }else if(binding.editTextPhone.text.isEmpty()){
+            msg(binding.contProgress, "Preencha o campo de Telefone!")
+            binding.editTextPhone.requestFocus()
+
+            retorno = false
+
+        }else if(binding.editTextTextEmailAddress.text.isEmpty()){
+            msg(binding.contProgress, "Preencha o campo de E-mail!")
+            binding.editTextTextEmailAddress.requestFocus()
+
+            retorno = false
+
+        }else if(binding.editTextTextPassword.text.isEmpty()){
+            msg(binding.contProgress, "Preencha o campo de senha!")
+            binding.editTextTextPassword.requestFocus()
+
+            retorno = false
+
+        }else if(binding.editTextTextPassword.text.isEmpty()){
+            msg(binding.contProgress, "Preencha o campo de senha!")
+            binding.editTextTextPassword.requestFocus()
+
+            retorno = false
+
+        }else if(binding.editTextNumberSignedCEP.text.isEmpty()){
+            msg(binding.contProgress, "Preencha o campo de CEP!")
+            binding.editTextNumberSignedCEP.requestFocus()
+
+            retorno = false
+        }else if(binding.editTextTextPostalAddress.text.isEmpty()){
+            msg(binding.contProgress, "Preencha o campo de endereço!")
+            binding.editTextTextPostalAddress.requestFocus()
+
+            retorno = false
+        }else if(binding.editTexAddresstNumber.text.isEmpty()){
+            msg(binding.contProgress, "Preencha o campo de número!")
+            binding.editTexAddresstNumber.requestFocus()
+
+            retorno = false
+        }else if(binding.editTextAddressComplement.text.isEmpty()){
+            binding.editTextAddressComplement.setText("N/A")
+
+        }else if(binding.editTextTextAddressCity.text.isEmpty()){
+            msg(binding.contProgress, "Preencha o campo de cidade!")
+            binding.editTextTextAddressCity.requestFocus()
+
+            retorno = false
+        }else if(binding.editTextAdressState.text.isEmpty()){
+            msg(binding.contProgress, "Preencha o campo de UF!")
+            binding.editTextAdressState.requestFocus()
+
+            retorno = false
+        }
+
+
+        return retorno
+
     }
 
 
