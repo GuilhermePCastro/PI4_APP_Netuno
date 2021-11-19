@@ -44,6 +44,8 @@ class CheckoutFragment : Fragment() {
             containerFrag = container
         }
 
+        binding.edtCEP.addTextChangedListener(Mask.mask("#####-###", binding.edtCEP))
+
         verificaLogin()
         atualizaDados()
 
@@ -419,6 +421,12 @@ class CheckoutFragment : Fragment() {
 
         }else if(binding.edtComplemento.text.isEmpty()){
             binding.edtComplemento.setText("N/A")
+        }else if(binding.edtCEP.text.length != 9) {
+
+            msg(binding.edtComplemento, "Preencha o campo de CEP corretamente!")
+            binding.edtCEP.requestFocus()
+
+            retorno = false
         }
 
         return retorno

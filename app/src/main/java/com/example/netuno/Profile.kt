@@ -26,8 +26,7 @@ import android.R.drawable
 import android.graphics.BitmapFactory
 
 import android.graphics.drawable.BitmapDrawable
-
-
+import androidx.core.widget.doOnTextChanged
 
 
 class Profile : AppCompatActivity() {
@@ -69,6 +68,11 @@ class Profile : AppCompatActivity() {
             launcher.launch(i)
 
         }
+
+        //Máscaras
+        binding.editTextTextPersonCPF.addTextChangedListener(Mask.mask("###.###.###-##", binding.editTextTextPersonCPF))
+        binding.editTextNumberSignedCEP.addTextChangedListener(Mask.mask("#####-###", binding.editTextNumberSignedCEP))
+        binding.editTextPhone.addTextChangedListener(Mask.mask("## #####-####", binding.editTextPhone))
 
         clienteId = retornaClienteId(this)
 
@@ -608,6 +612,22 @@ class Profile : AppCompatActivity() {
         }else if(binding.editTextAdressState.text.isEmpty()){
             msg(binding.contProgress, "Preencha o campo de UF!")
             binding.editTextAdressState.requestFocus()
+
+            retorno = false
+        }else if(binding.editTextPhone.text.length != 13) {
+            msg(binding.contProgress, "Preencha o campo de Telefone corretamente!")
+            binding.editTextPhone.requestFocus()
+
+            retorno = false
+        }else if(binding.editTextTextPersonCPF.text.length != 14) {
+            msg(binding.contProgress, "Preencha o campo de CPF corretamente!")
+            binding.editTextTextPersonCPF.requestFocus()
+
+            retorno = false
+
+        }else if(binding.editTextNumberSignedCEP.text.length != 9) {
+            msg(binding.contProgress, "Preencha o campo de CEP corretamente!")
+            binding.editTextNumberSignedCEP.requestFocus()
 
             retorno = false
         }
