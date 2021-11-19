@@ -70,6 +70,7 @@
                         android:layout_marginTop="60dp"
                         android:layout_marginRight="10dp"
                         android:ems="10"
+                        android:enabled="false"
                         android:gravity="bottom"
                         android:hint="Endereço"
                         android:inputType="textPostalAddress" />
@@ -104,6 +105,7 @@
                         android:layout_marginTop="160dp"
                         android:layout_marginBottom="10dp"
                         android:ems="10"
+                        android:enabled="false"
                         android:gravity="bottom"
                         android:hint="Cidade"
                         android:inputType="textPersonName" />
@@ -117,6 +119,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp"
                         android:ems="10"
+                        android:enabled="false"
                         android:hint="UF"
                         android:inputType="textPersonName" />
 

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.netuno.API.API
+import com.example.netuno.API.CEPAPI
 import com.example.netuno.databinding.FragmentCategoriasBinding
 import com.example.netuno.databinding.FragmentCheckoutBinding
 import com.example.netuno.databinding.ProdutoCarrinhoBinding
@@ -23,6 +24,8 @@ import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class CheckoutFragment : Fragment() {
 
@@ -45,6 +48,9 @@ class CheckoutFragment : Fragment() {
         }
 
         binding.edtCEP.addTextChangedListener(Mask.mask("#####-###", binding.edtCEP))
+        binding.edtCEP.setOnFocusChangeListener { view, b ->
+            pegaCEP()
+        }
 
         verificaLogin()
         atualizaDados()
@@ -396,13 +402,13 @@ class CheckoutFragment : Fragment() {
             retorno = false
 
         }else if(binding.edtCidade.text.isEmpty()){
-            msg(binding.contPrincipal, "Campo Cidade vázio!")
+            msg(binding.contPrincipal, "CEP inválido!")
             binding.edtCidade.requestFocus()
 
             retorno = false
 
         }else if(binding.edtEndereco.text.isEmpty()){
-            msg(binding.contPrincipal, "Campo Endereço vázio!")
+            msg(binding.contPrincipal, "CEP inválido!")
             binding.edtEndereco.requestFocus()
 
             retorno = false
@@ -414,7 +420,7 @@ class CheckoutFragment : Fragment() {
             retorno = false
 
         }else if(binding.edtUF.text.isEmpty()){
-            msg(binding.contPrincipal, "Campo UF vázio!")
+            msg(binding.contPrincipal, "CEP inválido!")
             binding.edtUF.requestFocus()
 
             retorno = false
@@ -431,6 +437,59 @@ class CheckoutFragment : Fragment() {
 
         return retorno
 
+    }
+
+    fun pegaCEP(){
+
+        if(binding.edtCEP.text.length == 9){
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://viacep.com.br")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+            val api = retrofit.create(CEPAPI::class.java)
+            val call = api.CEP(binding.edtCEP.text.toString().replace("-", ""))
+
+            val callback = object : Callback<CEP> {
+                override fun onResponse(call: Call<CEP>, response: Response<CEP>) {
+
+                    if (response.isSuccessful) {
+
+                        val cep = response.body()
+                        if (cep != null) {
+                            if(cep.erro == true){
+                                msg(binding.contPrincipal, "CEP inválido!")
+                                binding.edtEndereco.setText("")
+                                binding.edtCidade.setText("")
+                                binding.edtUF.setText("")
+                            }else{
+                                binding.edtEndereco.setText(cep.logradouro)
+                                binding.edtCidade.setText(cep.localidade)
+                                binding.edtUF.setText(cep.uf)
+                            }
+
+                        }
+
+                    }else {
+                        msg(binding.contPrincipal, "CEP inválido!")
+                        Log.e("ERROR", response.code().toString())
+                        Log.e("ERROR", response.body().toString())
+                    }
+                }
+
+                override fun onFailure(call: Call<CEP>, t: Throwable) {
+                    msg(binding.contPrincipal, "Não é possível se conectar ao servidor")
+                    Log.e("ERROR", "Falha ao executar serviço", t)
+
+                }
+
+            }
+            call.enqueue(callback)
+            //CarregaOn()
+
+
+        }
     }
 
 

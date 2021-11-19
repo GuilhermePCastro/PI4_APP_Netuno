@@ -13,9 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.example.netuno.API.API
 import com.example.netuno.activitys.MainActivity
 import com.example.netuno.databinding.ActivityProfileBinding
-import com.example.netuno.model.Cliente
-import com.example.netuno.model.Endereco
-import com.example.netuno.model.User
 import com.example.netuno.ui.*
 import com.example.netuno.ui.login.LoginActivity
 import com.google.android.material.snackbar.Snackbar
@@ -27,6 +24,10 @@ import android.graphics.BitmapFactory
 
 import android.graphics.drawable.BitmapDrawable
 import androidx.core.widget.doOnTextChanged
+import com.example.netuno.API.CEPAPI
+import com.example.netuno.model.*
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class Profile : AppCompatActivity() {
@@ -73,6 +74,9 @@ class Profile : AppCompatActivity() {
         binding.editTextTextPersonCPF.addTextChangedListener(Mask.mask("###.###.###-##", binding.editTextTextPersonCPF))
         binding.editTextNumberSignedCEP.addTextChangedListener(Mask.mask("#####-###", binding.editTextNumberSignedCEP))
         binding.editTextPhone.addTextChangedListener(Mask.mask("## #####-####", binding.editTextPhone))
+        binding.editTextNumberSignedCEP.setOnFocusChangeListener { view, b ->
+            pegaCEP()
+        }
 
         clienteId = retornaClienteId(this)
 
@@ -592,7 +596,7 @@ class Profile : AppCompatActivity() {
 
             retorno = false
         }else if(binding.editTextTextPostalAddress.text.isEmpty()){
-            msg(binding.contProgress, "Preencha o campo de endereço!")
+            msg(binding.contProgress, "CEP inválido!")
             binding.editTextTextPostalAddress.requestFocus()
 
             retorno = false
@@ -605,12 +609,12 @@ class Profile : AppCompatActivity() {
             binding.editTextAddressComplement.setText("N/A")
 
         }else if(binding.editTextTextAddressCity.text.isEmpty()){
-            msg(binding.contProgress, "Preencha o campo de cidade!")
+            msg(binding.contProgress, "CEP inválido!")
             binding.editTextTextAddressCity.requestFocus()
 
             retorno = false
         }else if(binding.editTextAdressState.text.isEmpty()){
-            msg(binding.contProgress, "Preencha o campo de UF!")
+            msg(binding.contProgress, "CEP inválido!")
             binding.editTextAdressState.requestFocus()
 
             retorno = false
@@ -635,6 +639,62 @@ class Profile : AppCompatActivity() {
 
         return retorno
 
+    }
+
+    fun pegaCEP(){
+
+        if(binding.editTextNumberSignedCEP.text.length == 9){
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://viacep.com.br")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+            val api = retrofit.create(CEPAPI::class.java)
+            val call = api.CEP(binding.editTextNumberSignedCEP.text.toString().replace("-", ""))
+
+            val callback = object : Callback<CEP> {
+                override fun onResponse(call: Call<CEP>, response: Response<CEP>) {
+
+                    CarregaOff()
+                    if (response.isSuccessful) {
+
+                        val cep = response.body()
+                        if (cep != null) {
+                            if(cep.erro == true){
+                                msg(binding.cardView3, "CEP inválido!")
+                                binding.editTextTextPostalAddress.setText("")
+                                binding.editTextTextAddressCity.setText("")
+                                binding.editTextAdressState.setText("")
+                            }else{
+                                binding.editTextTextPostalAddress.setText(cep.logradouro)
+                                binding.editTextTextAddressCity.setText(cep.localidade)
+                                binding.editTextAdressState.setText(cep.uf)
+                            }
+
+                        }
+
+                    }else {
+                        CarregaOff()
+                        msg(binding.cardView3, "CEP inválido!")
+                        Log.e("ERROR", response.code().toString())
+                        Log.e("ERROR", response.body().toString())
+                    }
+                }
+
+                override fun onFailure(call: Call<CEP>, t: Throwable) {
+                    CarregaOff()
+                    msg(binding.cardView3, "Não é possível se conectar ao servidor")
+                    Log.e("ERROR", "Falha ao executar serviço", t)
+
+                }
+
+            }
+            call.enqueue(callback)
+            //CarregaOn()
+
+
+        }
     }
 
 
