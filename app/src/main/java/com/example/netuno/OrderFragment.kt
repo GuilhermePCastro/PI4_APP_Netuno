@@ -100,8 +100,7 @@ class OrderFragment : Fragment() {
             binding.edtNumeroPed.text = "Nº ${it.ds_numero}"
             binding.edtComplementoPed.text = "Complemento - ${it.ds_complemento}"
             binding.edtCEPped.text = "CEP ${it.ds_cep}"
-            binding.edtCidadePed.text = it.ds_cidade
-            binding.edtUFPed.text = it.ds_uf
+            binding.edtCidadePed.text = it.ds_cidade + " - " + it.ds_uf
             binding.txtValorFrete.text = "R$ ${formataNumero(it.vl_frete, "dinheiro")}"
             binding.txtValorProd.text = "R$ ${formataNumero(it.vl_total - it.vl_frete, "dinheiro")}"
             binding.txtValorTot.text = "R$ ${formataNumero(it.vl_total, "dinheiro")}"

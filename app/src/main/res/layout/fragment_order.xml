@@ -96,6 +96,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="48dp"
                                 android:layout_marginLeft="16dp"
+                                android:layout_weight="0"
                                 android:gravity="center|left"
                                 android:text="Rua Tal" />
 
@@ -104,6 +105,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="48dp"
                                 android:layout_marginLeft="16dp"
+                                android:layout_weight="0"
                                 android:gravity="center|left"
                                 android:text="Nº 201" />
                         </TableRow>
@@ -117,6 +119,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="48dp"
                                 android:layout_marginLeft="16dp"
+                                android:layout_weight="0"
                                 android:gravity="center|left"
                                 android:text="CEP 00000-000" />
 
@@ -125,16 +128,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="48dp"
                                 android:layout_marginLeft="16dp"
+                                android:layout_weight="1"
                                 android:gravity="center|left"
                                 android:text="São Paulo" />
-
-                            <TextView
-                                android:id="@+id/edtUFPed"
-                                android:layout_width="wrap_content"
-                                android:layout_height="48dp"
-                                android:layout_marginLeft="16dp"
-                                android:gravity="center|left"
-                                android:text="SP" />
 
                         </TableRow>
 

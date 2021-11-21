@@ -75,7 +75,9 @@ class Profile : AppCompatActivity() {
         binding.editTextNumberSignedCEP.addTextChangedListener(Mask.mask("#####-###", binding.editTextNumberSignedCEP))
         binding.editTextPhone.addTextChangedListener(Mask.mask("## #####-####", binding.editTextPhone))
         binding.editTextNumberSignedCEP.setOnFocusChangeListener { view, b ->
-            pegaCEP()
+            if(!b){
+                pegaCEP()
+            }
         }
 
         clienteId = retornaClienteId(this)

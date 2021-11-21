@@ -138,3 +138,26 @@ fun Base64toImg(string: String): Bitmap {
     var decodeString = Base64.decode(string, Base64.NO_PADDING)
     return BitmapFactory.decodeByteArray(decodeString, 0, decodeString.size)
 }
+
+//Função que calcula o valor do frete de acordo com um valor base e a diferença lógica entre os CEPs
+fun CalculaFrete(cepDestino: Int): Double{
+
+    var valorFrete  = 0.00
+    var cepOrigem = 4696000
+    //Diferença entre os CEPs
+    var dif = cepOrigem - cepDestino
+
+    //Deixando positivo o valor
+    if(dif < 0){
+        dif = dif * (-1)
+    }
+
+    valorFrete = ((dif/10000)/1.50).toDouble()
+
+    //Se o frete for menor que 10, o frete é grátis
+    if(valorFrete < 10){
+        valorFrete = 0.00
+    }
+
+    return valorFrete
+}

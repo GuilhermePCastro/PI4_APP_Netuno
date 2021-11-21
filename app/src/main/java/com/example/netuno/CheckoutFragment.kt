@@ -48,8 +48,10 @@ class CheckoutFragment : Fragment() {
         }
 
         binding.edtCEP.addTextChangedListener(Mask.mask("#####-###", binding.edtCEP))
-        binding.edtCEP.setOnFocusChangeListener { view, b ->
-            pegaCEP()
+        binding.edtCEP.setOnFocusChangeListener{ view, b ->
+            if(!b){
+                pegaCEP()
+            }
         }
 
         verificaLogin()
@@ -83,8 +85,8 @@ class CheckoutFragment : Fragment() {
 
     fun atualizaDados(){
         carregaOn()
-        atualizaValores()
         atualizaEnd()
+        atualizaValores()
 
     }
 
@@ -146,7 +148,8 @@ class CheckoutFragment : Fragment() {
                             }
                         }
 
-                        frete = 00.00
+                        var freteCal = pegaFrete()
+                        frete = freteCal
                         total = carrinho.valor
 
                         binding.lblFrete.text = "R$ ${formataNumero(frete,"dinheiro")}"
@@ -467,6 +470,7 @@ class CheckoutFragment : Fragment() {
                                 binding.edtEndereco.setText(cep.logradouro)
                                 binding.edtCidade.setText(cep.localidade)
                                 binding.edtUF.setText(cep.uf)
+                                atualizaValores()
                             }
 
                         }
@@ -492,6 +496,14 @@ class CheckoutFragment : Fragment() {
         }
     }
 
+    fun pegaFrete(): Double{
+
+        var cep = binding.edtCEP.text.toString().replace("-","")
+        var valorFrete = CalculaFrete(cep.toInt())
+
+        return valorFrete
+
+    }
 
 
 }
