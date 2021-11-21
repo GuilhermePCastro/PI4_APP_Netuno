@@ -150,11 +150,11 @@ class CheckoutFragment : Fragment() {
 
                         var freteCal = pegaFrete()
                         frete = freteCal
-                        total = carrinho.valor
+                        total = carrinho.valor + frete
 
                         binding.lblFrete.text = "R$ ${formataNumero(frete,"dinheiro")}"
                         binding.lblTotProd.text =  "R$ ${formataNumero(carrinho.valor, "dinheiro")}"
-                        binding.lblVlTotal.text = "R$ ${formataNumero(frete + carrinho.valor, "dinheiro")}"
+                        binding.lblVlTotal.text = "R$ ${formataNumero(total, "dinheiro")}"
                         atualizarUI(carrinho.itens)
 
                     }
