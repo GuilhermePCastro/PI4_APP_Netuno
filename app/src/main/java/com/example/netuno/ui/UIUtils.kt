@@ -126,16 +126,17 @@ fun imgToBase64(img: Bitmap?): String {
 
     var bos = ByteArrayOutputStream()
     if (img != null) {
-        img.compress(Bitmap.CompressFormat.JPEG, 2, bos)
+        var imgCon = Bitmap.createScaledBitmap(img, 150, 150, true )
+        imgCon.compress(Bitmap.CompressFormat.JPEG, 30, bos)
     }
-    var encodeString = Base64.encodeToString(bos.toByteArray(), Base64.NO_PADDING);
+    var encodeString = Base64.encodeToString(bos.toByteArray(), Base64.NO_WRAP);
 
     return encodeString
 }
 
 fun Base64toImg(string: String): Bitmap {
 
-    var decodeString = Base64.decode(string, Base64.NO_PADDING)
+    var decodeString = Base64.decode(string, Base64.NO_WRAP)
     return BitmapFactory.decodeByteArray(decodeString, 0, decodeString.size)
 }
 
