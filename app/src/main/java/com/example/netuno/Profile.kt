@@ -200,6 +200,7 @@ class Profile : AppCompatActivity() {
             binding.editTextTextEmailAddress.isEnabled = false
             if(it.ds_fotoperfil != ""){
                 binding.imageView.setImageBitmap(Base64toImg(it.ds_fotoperfil))
+                img = Base64toImg(it.ds_fotoperfil)
             }else{
                 img = null
             }

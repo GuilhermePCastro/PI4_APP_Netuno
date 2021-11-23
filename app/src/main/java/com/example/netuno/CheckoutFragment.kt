@@ -456,7 +456,7 @@ class CheckoutFragment : Fragment() {
 
             val callback = object : Callback<CEP> {
                 override fun onResponse(call: Call<CEP>, response: Response<CEP>) {
-
+                    carregaOff()
                     if (response.isSuccessful) {
 
                         val cep = response.body()
@@ -483,6 +483,7 @@ class CheckoutFragment : Fragment() {
                 }
 
                 override fun onFailure(call: Call<CEP>, t: Throwable) {
+                    carregaOff()
                     msg(binding.contPrincipal, "Não é possível se conectar ao servidor")
                     Log.e("ERROR", "Falha ao executar serviço", t)
 
@@ -490,7 +491,7 @@ class CheckoutFragment : Fragment() {
 
             }
             call.enqueue(callback)
-            //CarregaOn()
+            //carregaOn()
 
 
         }
