@@ -127,7 +127,7 @@ fun imgToBase64(img: Bitmap?): String {
     var bos = ByteArrayOutputStream()
     if (img != null) {
         var imgCon = Bitmap.createScaledBitmap(img, 150, 150, true )
-        imgCon.compress(Bitmap.CompressFormat.JPEG, 30, bos)
+        imgCon.compress(Bitmap.CompressFormat.JPEG, 20, bos)
     }
     var encodeString = Base64.encodeToString(bos.toByteArray(), Base64.NO_WRAP);
 
