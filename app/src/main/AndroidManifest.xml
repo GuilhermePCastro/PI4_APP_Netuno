@@ -34,6 +34,7 @@
         <activity
             android:name=".Profile"
             android:exported="true"
+            android:noHistory="true"
             android:parentActivityName=".activitys.MainActivity" />
         <activity
             android:name=".ui.login.LoginActivity"
