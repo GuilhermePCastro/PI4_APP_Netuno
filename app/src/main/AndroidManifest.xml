@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -16,10 +16,8 @@
         android:theme="@style/Theme.Netuno"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activitys.QrCodeActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activitys.MainActivity"
+            android:theme="@style/AppCompat.TelaCheia"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,9 +26,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activitys.QrCodeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activitys.MainActivity"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".Menu"
             android:exported="true"
-            android:parentActivityName=".activitys.MainActivity"></activity>
+            android:parentActivityName=".activitys.MainActivity" />
         <activity
             android:name=".Profile"
             android:exported="true"
@@ -40,7 +45,7 @@
             android:name=".ui.login.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:parentActivityName=".activitys.MainActivity"></activity>
+            android:parentActivityName=".activitys.MainActivity" />
     </application>
 
 </manifest>
