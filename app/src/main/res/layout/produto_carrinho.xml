@@ -60,14 +60,13 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/btnAdd"
+                            android:id="@+id/btnRemove"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginLeft="10dp"
-                            android:text="+"
-                            android:textAllCaps="false"
+                            android:text="-"
                             android:textSize="16sp"
-                            app:iconPadding="0dp" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/lblQuantidade"
@@ -81,12 +80,13 @@
                             android:textStyle="bold" />
 
                         <Button
-                            android:id="@+id/btnRemove"
+                            android:id="@+id/btnAdd"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:text="-"
+                            android:text="+"
+                            android:textAllCaps="false"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
+                            app:iconPadding="0dp" />
                     </LinearLayout>
 
                 </TableRow>
