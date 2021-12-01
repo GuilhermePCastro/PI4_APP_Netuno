@@ -502,6 +502,7 @@ class Profile : AppCompatActivity() {
                     if (alert != null) {
                         alert.setOnDismissListener {
                             chamaLogin()
+                            finish()
                         }
                         alert.create().show()
                     }
